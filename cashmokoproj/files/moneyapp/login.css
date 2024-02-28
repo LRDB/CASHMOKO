@@ -1,0 +1,23 @@
+body {
+    background-color: white;
+}
+
+#submitButton{
+    background-color: #E28413;
+    color: #FBF5F3;
+    align-items: center;
+}
+
+.form{
+    height:100vh;
+    width:100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.textbox {
+    width: 400px;
+    height: 40px;
+}
