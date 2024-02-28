@@ -1,0 +1,58 @@
+/* Reset Bootstrap styles for relevant elements */
+button, input, select, textarea {
+    font-family: inherit !important;
+    font-weight: inherit !important;
+}
+
+/* Your custom styles */
+* {
+    font-family: 'Inter', Arial !important;
+    font-weight: 700 !important;
+}
+
+body {
+    background-color: #fbf6f4;
+}
+
+h1 {
+    margin: 0.25%;
+    text-align: justify;
+}
+
+#submitButton{
+    background-color: #e28313;
+    align-items: center;
+    margin: 1%;
+    width: 75px;
+    height: 25px;
+}
+
+input{
+    box-shadow: 3px 3px #e1dcdb;
+}
+
+.formsection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#formdetails{
+    margin: 1%;
+}
+
+.textbox {
+    width: 400px;
+    height: 40px;
+    margin: 1%;
+    font-weight: 400 !important;
+    font-size: 110%;
+}
+
+a {
+    text-decoration: none !important;
+    color: rgba(251,246,244,255) !important;
+    font-weight: 300 !important;
+    font-size: 100%;
+}
