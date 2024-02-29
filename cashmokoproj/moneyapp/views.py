@@ -30,7 +30,7 @@ def login_user(request):
             messages.error(request, "Wrong username or password. Please try again!")
             return redirect("home")
     else:
-        return render(request, "moneyapp/login.html")
+        return redirect("home")
 
 
 @csrf_protect
