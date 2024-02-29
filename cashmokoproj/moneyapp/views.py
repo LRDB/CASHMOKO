@@ -18,16 +18,38 @@ def login_user(request):
         username = request.POST["username"]
         password = request.POST["password"]
 
+        if not username or not password:
+            messages.error(request, "Username and password cannot be empty. Please try again!")
+            return redirect("home")
+
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, "moneyapp/mainpage.html", {"name" : username})
+            return render(request, "moneyapp/mainpage.html", {"name": username})
         else:
-            messages.success(request, "Wrong username or password. Please try again!")
+            messages.error(request, "Wrong username or password. Please try again!")
             return redirect("home")
     else:
         return render(request, "moneyapp/login.html")
-    
+
+
+@csrf_protect
+def mainpage(request):
+    return render(request, 'moneyapp/mainpage.html')
+
+@csrf_protect
+def userprofile(request):
+    return render(request, "moneyapp/userprofile.html")
+
+@csrf_protect
+def userbalances(request):
+    return render(request, "moneyapp/userbalances.html")  
+
+@csrf_protect
+def useripon(request):
+    return render(request, "moneyapp/useripon.html")   
+
+
 # def signup(request):
 #     if request.method == "POST":
 #         username = request.POST["username"]
@@ -39,7 +61,3 @@ def login_user(request):
 #         messages.success(request, "Login Successful")
         
 #         return redirect("login")
-
-@csrf_protect
-def mainpage(request):
-    return render(request, 'moneyapp/mainpage.html')

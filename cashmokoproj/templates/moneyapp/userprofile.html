@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CASHMOKO: Cash Kita</title>
+        <link rel="stylesheet" href="{% static "moneyapp/userprofile.css" %}">
+    </head>  
+    <body>
+        <div class="banner">
+            <div class="row">
+
+                <div class="column">
+                    <h1>USER PROFILE</h1>
+                        <ul>
+                            <li><a href="#">Name</a>
+                                <input type="text" id="name" name="name" minlength="3" maxlength="50" required>
+                            </li>
+                            <li><a href="#">Gender</a>
+                                <input type="text" id="gender" name="gender" minlength="3" maxlength="20" required>
+                            </li>
+                            <li><a href="#">Birthday</a>
+                                <input type="text" id="bday" name="bday" minlength="3" maxlength="20" required>
+                            </li>
+                            <li><a href="#">Email</a>
+                                <input type="text" id="email" name="email" minlength="3" maxlength="20" required>
+                            </li>
+                            <li><a href="#">Currency</a>
+                                <input type="text" id="currency" name="currency" minlength="3" maxlength="20" required>
+                            </li>
+                            <li><a href="#">Language</a>
+                                <input type="text" id="lang" name="lang" minlength="3" maxlength="20" required>
+                            </li>
+                        </ul>
+                </div>
+
+                <div class="column">
+                    <h1>CUSTOM PLATFORMS</h1>
+                        <ul>
+                            <li><a href="#">Cash</a>
+                                <input type="text" id="cash" name="cash" minlength="3" maxlength="20" required>
+                            </li>
+                            <li><a href="#">E-Wallet</a>
+                                <input type="text" id="ewallet" name="ewallet" minlength="3" maxlength="20" required>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <input type="submit">
+
+                <button><a href="{%url 'mainpage'%}">Main Menu</a></button>
+            </div>
+        </div>
+    </body>  
+</html>
