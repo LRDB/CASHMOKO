@@ -1,4 +1,3 @@
-
 from . import views
 from django.contrib import admin
 from django.urls import include, path
@@ -9,10 +8,11 @@ from django.urls import include, path
 #     path('mainpage', views.mainpage, name="mainpage")
 # ]
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('login_user/', views.login_user, name='login'),
-    path('mainpage/', views.mainpage, name='mainpage'),
-    path('userbalances/', views.userbalances, name='userbalances'),
-    path('useripon/', views.useripon, name='useripon'),
-    path('userprofile/', views.userprofile, name='userprofile'),
+    path("", views.home, name="home"),
+    path("login_user/", views.login_user, name="login"),
+    path("mainpage/", views.mainpage, name="mainpage"),
+    path("userbalances/", views.userbalances, name="userbalances"),
+    path("useripon/", views.useripon, name="useripon"),
+    path("userprofile/", views.userprofile, name="userprofile"),
+    path("signup/", views.signup, name="signup"),
 ]
