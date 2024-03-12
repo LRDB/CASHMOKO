@@ -21,7 +21,9 @@
                     <li class="nav-item"></li>
                     <li class="nav-item"></li>
                 </ul>
-            </div><button class="btn btn-primary btn-sm" type="button" style="background: rgb(255,0,0);" onclick="location.href='{% url 'home' %}'">Sign Out</button>
+                <h4 style="margin:1%">Welcome, {{ name }}</h4>
+                <button class="btn btn-primary btn-sm" type="button" style="background: rgb(255,0,0);" onclick="location.href='{% url 'home' %}'">Sign Out</button>
+            </div>
         </div>
     </nav>
     <div class="container">

@@ -55,13 +55,17 @@ def userprofile(request):
 
 
 @csrf_protect
+@login_required
 def userbalances(request):
-    return render(request, "moneyapp/userbalances.html")
+    username = request.user.username
+    return render(request, "moneyapp/userbalances.html", {"name": username})
 
 
 @csrf_protect
+@login_required
 def useripon(request):
-    return render(request, "moneyapp/useripon.html")
+    username = request.user.username
+    return render(request, "moneyapp/useripon.html", {"name": username})
 
 
 def signup(request):
@@ -69,14 +73,22 @@ def signup(request):
         username = request.POST["username"]
         password = request.POST["password"]
         email = request.POST["email"]
+        first_name = request.POST["first_name"]
+        last_name = request.POST["last_name"]
         ver = random.randint(10**5, 10**6 + 1)
 
         if User.objects.filter(username=username):
-            messages.error(request, "Username already exists")
+            messages.error(request, "Username already exists. Try another username")
+            return redirect("signup")
+
+        if User.objects.filter(email=email):
+            messages.error(request, "Email already exists. Try another email.")
             return redirect("signup")
 
         user = User.objects.create_user(username, email, password)
         user.pin = ver
+        user.first_name = first_name
+        user.last_name = last_name
         user.save()
 
         messages.success(request, "Sign-up was successful")
