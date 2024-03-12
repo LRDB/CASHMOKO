@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 from cashmokoproj import settings
 import smtplib
 from email.message import EmailMessage
@@ -33,7 +34,7 @@ def login_user(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, "moneyapp/mainpage.html", {"name": username})
+            return redirect("mainpage")
         else:
             messages.error(request, "Wrong username or password. Please try again!")
             return redirect("home")
@@ -42,8 +43,10 @@ def login_user(request):
 
 
 @csrf_protect
+@login_required
 def mainpage(request):
-    return render(request, "moneyapp/mainpage.html")
+    username = request.user.username
+    return render(request, "moneyapp/mainpage.html", {"name": username})
 
 
 @csrf_protect
@@ -67,6 +70,10 @@ def signup(request):
         password = request.POST["password"]
         email = request.POST["email"]
         ver = random.randint(10**5, 10**6 + 1)
+
+        if User.objects.filter(username=username):
+            messages.error(request, "Username already exists")
+            return redirect("signup")
 
         user = User.objects.create_user(username, email, password)
         user.pin = ver
