@@ -45,27 +45,53 @@ def login_user(request):
 @csrf_protect
 @login_required
 def mainpage(request):
-    username = request.user.username
-    return render(request, "moneyapp/mainpage.html", {"name": username})
+    fname = request.user.first_name
+    lname = request.user.last_name
+    name = f"{fname} {lname}"
+    return render(request, "moneyapp/mainpage.html", {"name": name})
 
 
 @csrf_protect
 def userprofile(request):
-    return render(request, "moneyapp/userprofile.html")
+    fname = request.user.first_name
+    lname = request.user.last_name
+    name = f"{fname} {lname}"
+    email = request.user.email
+
+    if request.method == "POST":
+        new_name = request.POST["name"]
+        if new_name == "":
+            return redirect("userprofile")
+
+        new_first, new_last = new_name.split(" ")
+
+        user = request.user
+        user.first_name = new_first
+        user.last_name = new_last
+
+        user.save()
+
+        return redirect("userprofile")
+
+    return render(request, "moneyapp/userprofile.html", {"name": name, "email": email})
 
 
 @csrf_protect
 @login_required
 def userbalances(request):
-    username = request.user.username
-    return render(request, "moneyapp/userbalances.html", {"name": username})
+    fname = request.user.first_name
+    lname = request.user.last_name
+    name = f"{fname} {lname}"
+    return render(request, "moneyapp/userbalances.html", {"name": name})
 
 
 @csrf_protect
 @login_required
 def useripon(request):
-    username = request.user.username
-    return render(request, "moneyapp/useripon.html", {"name": username})
+    fname = request.user.first_name
+    lname = request.user.last_name
+    name = f"{fname} {lname}"
+    return render(request, "moneyapp/useripon.html", {"name": name})
 
 
 def signup(request):
