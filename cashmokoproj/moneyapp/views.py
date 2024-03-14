@@ -3,10 +3,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 from cashmokoproj import settings
 import smtplib
 from email.message import EmailMessage
@@ -14,9 +15,13 @@ import random
 
 
 @csrf_protect
-# Create your views here.
 def home(request):
     return render(request, "moneyapp/login.html")
+
+
+def logout_user(request):
+    logout(request)
+    return redirect("home")
 
 
 @csrf_protect
@@ -32,6 +37,7 @@ def login_user(request):
             return redirect("home")
 
         user = authenticate(username=username, password=password)
+
         if user is not None:
             login(request, user)
             return redirect("mainpage")
@@ -45,17 +51,22 @@ def login_user(request):
 @csrf_protect
 @login_required
 def mainpage(request):
-    fname = request.user.first_name
-    lname = request.user.last_name
-    name = f"{fname} {lname}"
+    if isinstance(request.user, AnonymousUser):
+        name = "Guest"  # Or any default name you prefer
+    else:
+        fname = request.user.first_name
+        lname = request.user.last_name
+        name = f"{fname} {lname}"
     return render(request, "moneyapp/mainpage.html", {"name": name})
 
 
 @csrf_protect
+@login_required
 def userprofile(request):
     fname = request.user.first_name
     lname = request.user.last_name
     name = f"{fname} {lname}"
+    username = request.user.username
     email = request.user.email
 
     if request.method == "POST":
@@ -73,7 +84,11 @@ def userprofile(request):
 
         return redirect("userprofile")
 
-    return render(request, "moneyapp/userprofile.html", {"name": name, "email": email})
+    return render(
+        request,
+        "moneyapp/userprofile.html",
+        {"name": name, "email": email, "username": username},
+    )
 
 
 @csrf_protect
@@ -82,6 +97,7 @@ def userbalances(request):
     fname = request.user.first_name
     lname = request.user.last_name
     name = f"{fname} {lname}"
+    # name = request.user.username
     return render(request, "moneyapp/userbalances.html", {"name": name})
 
 
@@ -91,6 +107,7 @@ def useripon(request):
     fname = request.user.first_name
     lname = request.user.last_name
     name = f"{fname} {lname}"
+    # name = request.user.username
     return render(request, "moneyapp/useripon.html", {"name": name})
 
 
