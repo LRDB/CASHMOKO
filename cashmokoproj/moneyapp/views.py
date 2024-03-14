@@ -16,7 +16,10 @@ import random
 
 @csrf_protect
 def home(request):
-    return render(request, "moneyapp/login.html")
+    if request.user.is_authenticated:
+        return render(request, "moneyapp/mainpage.html")
+    else:
+        return render(request, "moneyapp/login.html")
 
 
 def logout_user(request):
