@@ -16,10 +16,7 @@ import random
 
 @csrf_protect
 def home(request):
-    if request.user.is_authenticated:
-        return render(request, "moneyapp/mainpage.html")
-    else:
-        return render(request, "moneyapp/login.html")
+    return render(request, "moneyapp/login.html")
 
 
 def logout_user(request):
@@ -40,7 +37,6 @@ def login_user(request):
             return redirect("home")
 
         user = authenticate(username=username, password=password)
-
         if user is not None:
             login(request, user)
             return redirect("mainpage")
@@ -74,7 +70,7 @@ def userprofile(request):
 
     if request.method == "POST":
         new_name = request.POST["name"]
-        if new_name == "":
+        if new_name == "" or len(new_name) != 2:
             return redirect("userprofile")
 
         new_first, new_last = new_name.split(" ")
