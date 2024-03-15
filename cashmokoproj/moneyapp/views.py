@@ -69,11 +69,11 @@ def userprofile(request):
     email = request.user.email
 
     if request.method == "POST":
-        new_name = request.POST["name"]
+        new_name = request.POST["name"].split(" ")
         if new_name == "" or len(new_name) != 2:
             return redirect("userprofile")
 
-        new_first, new_last = new_name.split(" ")
+        new_first, new_last = new_name
 
         user = request.user
         user.first_name = new_first
