@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser
 from cashmokoproj import settings
+from moneyapp.models import Person
 import smtplib
 from email.message import EmailMessage
 import random
