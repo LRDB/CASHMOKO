@@ -8,17 +8,36 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
     <body>
-        <nav class="navbar bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/userpage">CASHMOKO: Cash Kita</a>
-                <form method="post" action="/logout/">
+       <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CASHMOKO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Transaction</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Ipon</a>
+                </li>
+            </ul>
+            <div class="d-flex flex-row align-items-center gap-3">
+                <p class="fs-5 fw-normal fst-italic" style="margin: 1rem 1rem 1rem 0">{% block username %}{% endblock %}</p>
+            </div>
+                <form method="post" class="d-flex" action="/logout/">
                     {% csrf_token %}
                     <button class="btn btn-outline-success" type="submit">Logout</button>
                 </form>
-            </div>
+            
+        </div>
         </nav>
         <div id="content", name="content">
-            <div class="row justify-content-center">
+            <div class="row">
                 {% block content %}
                 {% endblock %}
             </div>
