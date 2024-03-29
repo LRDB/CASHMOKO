@@ -5,8 +5,20 @@ Transactions
 {% endblock %}
 
 {% block content %}
-<h1>{{ ls.first_name }}</h1>
+<h1>{{ ls.first_name }} {{ ls.last_name }}</h1>
 <h1>{{ ls.person.email_pin }}</h1>
+
+<div class="d-flex justify-content-center grid gap-3">
+    {% for bank, amount in ls.person.bankaccounts.items %}
+    {% if bank != NONE %}
+    <div class="border border-dark border-4 w-50 p-3">
+        <h2 class="text-center">{{bank}}</h2>
+        <h3 class="text-center font-monospace">{{amount}}</h3>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
 <table class="table table-striped">
     <tr>
         <th>Log ID</th>

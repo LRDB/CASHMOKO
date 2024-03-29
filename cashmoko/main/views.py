@@ -8,9 +8,12 @@ from .models import Person
 from register.forms import CreatePerson
 import random
 import datetime
+import pytz
 import smtplib
 from email.message import EmailMessage
 from cashmoko import settings
+
+TIMEZONE = pytz.timezone("Asia/Manila")
 
 
 def emailMessage(user, p):
@@ -49,18 +52,40 @@ def userpage(response):
         emailMessage(ls, p)
         return redirect("verifyEmail")
 
+    person = ls.person
+    m = person.moneytransactions
+    banks = person.bankaccounts
+    # print(banks)
+
+    # print(banks)
+
     ## Guide for making new transactions
     # person = ls.person
     # moneytransactions = person.moneytransactions
     # new_log = {
-    #     "date": str(datetime.datetime.now()),
+    #     "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
     #     "type": "debit",
     #     "category": "allowance",
-    #     "amount": 1000,
-    #     "startBank": "BDO",
-    #     "endBank": "wallet",
+    #     "amount": 1,
+    #     "startBank": "None",
+    #     "endBank": "maya",
+    #     "done": False,
     # }
     # transaction_id = len(moneytransactions)  # Use the length as a unique key
     # moneytransactions[str(transaction_id)] = new_log
-    # person.save()
+
+    for k, v in m.items():
+        if v["done"] == False:
+            end = v["endBank"].upper()
+            start = v["startBank"].upper()
+            if v["type"] == "debit":
+                banks[end] += v["amount"]
+            elif v["type"] == "credit":
+                banks[end] -= v["amount"]
+            elif v["type"] == "banktransfer":
+                banks[start] -= v["amount"]
+                banks[end] += v["amount"]
+            v["done"] = True
+
+    person.save()
     return render(response, "main/userpage.html", {"ls": ls})

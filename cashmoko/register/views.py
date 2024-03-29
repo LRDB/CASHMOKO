@@ -5,6 +5,9 @@ from main.models import Person
 from django.contrib import messages
 import random
 import datetime
+import pytz
+
+TIMEZONE = pytz.timezone("Asia/Manila")
 
 
 # Create your views here.
@@ -15,13 +18,26 @@ def register(response):
             pin = random.randint(10**5, 10**6 + 1)
             moneytransactions = {
                 0: {
-                    "date": str(datetime.datetime.now()),
+                    "date": str(
+                        datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                    ),
                     "type": "None",
                     "category": "None",
                     "amount": 0,
                     "startBank": "None",
                     "endBank": "None",
+                    "done": False,
                 },
+            }
+
+            bankaccounts = {
+                "BDO": 0,
+                "BPI": 0,
+                "MAYA": 0,
+                "GCASH": 0,
+                "WALLET": 0,
+                "IPON": 0,
+                "NONE": 0,
             }
             user = form.save(commit=False)
             user.first_name = form.cleaned_data["firstname"]
@@ -31,6 +47,7 @@ def register(response):
                 user=user,
                 email_pin=pin,
                 moneytransactions=moneytransactions,
+                bankaccounts=bankaccounts,
                 verified=False,
             )
             messages.success(response, "Sign-up was successful")
