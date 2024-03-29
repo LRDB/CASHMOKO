@@ -14,7 +14,7 @@ Transactions
 
 <div class="d-flex justify-content-center gap-3">
     {% for bank, amount in ls.person.bankaccounts.items %}
-    {% if bank != None %}
+    {% if bank != "NONE" %}
     <div class="border border-dark border-4 w-50 p-3">
         <h2 class="text-center">{{bank}}</h2>
         <h3 class="text-center font-monospace">{{amount}}</h3>
@@ -35,6 +35,7 @@ Transactions
     </tr>
 
     {% for key, t in ls.person.moneytransactions.items %}
+        {% if key != "0" %}
         <tr>
         <td>{{ key }}</td>
         <td>{{ t.date }}</td>
@@ -44,6 +45,7 @@ Transactions
         <td>{{ t.startBank }}</td>
         <td>{{ t.endBank }}</td>
         </tr>
+       {% endif %} 
     {% endfor %}
 
 </table>

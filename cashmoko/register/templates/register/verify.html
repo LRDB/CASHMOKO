@@ -7,8 +7,7 @@ Verify Email
 
 {% block content %}
 <div style="display: flex; justify-content: center; align-items: center; min-height:100vh; overflow:hidden;">
-<form method="post" action="verifyEmail">
-
+<form method="post" action="/verifyEmail/">
     <div>
         {% if messages %}
             {% for message in messages %}
@@ -18,10 +17,12 @@ Verify Email
             {% endfor %}
         {% endif %}  
     </div>
+
     <h1>Verify Email</h1>
     <hr>
     {% csrf_token %}
     {{form|crispy}}
+    <p>Use a different account? Log in <a href="/login">here</a></p>
     <button type="submit" class="btn btn-success">Verify</button>
 </form>
 </div>
