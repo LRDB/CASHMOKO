@@ -1,0 +1,34 @@
+{% extends 'main/userbase.html' %}
+
+{% block title %}
+Transactions
+{% endblock %}
+
+{% block content %}
+<h1>{{ ls.first_name }}</h1>
+<h1>{{ ls.person.email_pin }}</h1>
+<table class="table table-striped">
+    <tr>
+        <th>Log ID</th>
+        <th>Date</th>
+        <th>Transaction Type</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Start Bank</th>
+        <th>End Bank</th>
+    </tr>
+
+    {% for key, t in ls.person.moneytransactions.items %}
+        <tr>
+        <td>{{ key }}</td>
+        <td>{{ t.date }}</td>
+        <td>{{ t.type }}</td>
+        <td>{{ t.category }}</td>
+        <td>{{ t.amount }}</td>
+        <td>{{ t.startBank }}</td>
+        <td>{{ t.endBank }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

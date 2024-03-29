@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Transactions
+{% endblock %}
+
+{% block content %}
+<table>
+    <h1>{{ls.firstname}}</h1>
+    <tr>
+        <th>Log ID</th>
+        <th>Transaction Type</th>
+        <th>Amount</th>
+    </tr>
+    {% for t in ls.transaction_set.all %}
+        <tr>
+            <td>{{t.moneytransactions.logID}}</td>
+            <td>{{t.moneytransactions.transaction.type}}</td>
+            <td>{{t.moneytransactions.transaction.amount}}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}
