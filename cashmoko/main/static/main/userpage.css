@@ -1,0 +1,65 @@
+.balances {
+    display: flex;
+    align-items: center;
+    height: 18vh;
+    justify-content: center;
+    margin: 0.5rem 1rem;
+    padding: 0.25rem;
+    background-color: purple;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+}
+
+.boxes {
+    width: 250px;
+}
+
+.big-group {
+    display: flex;
+    height: 70vh;
+    margin: 0.5rem;
+}
+
+.b {
+    text-decoration: none;
+    color: black;
+}
+
+.left-panel {
+    width: 50%;
+    height: 100%;
+    background-color: yellow;
+    margin: 0rem 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.right-panel {
+    width: 50%;
+    height: 100%;
+    margin: 0rem 0.5rem;
+    padding: 1rem;
+    background-color: blue;
+}
+
+.groups {
+    display: flex;
+    width: auto;
+    height: 20vh;
+    background-color: green;
+    padding: 1.25rem;
+    margin: 1rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    width: 18vh;
+    height: auto;
+    background-color: black;
+    border-radius: 75%;
+}
+
+.text {
+    font-size: 1.5rem;
+    margin: 1rem;
+}

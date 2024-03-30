@@ -4,49 +4,108 @@
 Transactions
 {% endblock %}
 
+{% block stylesheet %}
+"static/main/userpage.css"
+{% endblock %}
+
 {% block username%}
 {{ls.username}}
 {% endblock %}
 
 {% block content %}
-<h1>{{ ls.first_name }} {{ ls.last_name }}</h1>
-<h1>{{ ls.person.email_pin }}</h1>
 
-<div class="d-flex justify-content-center gap-3">
-    {% for bank, amount in ls.person.bankaccounts.items %}
-    {% if bank != "NONE" %}
-    <div class="border border-dark border-4 w-50 p-3">
-        <h2 class="text-center">{{bank}}</h2>
-        <h3 class="text-center font-monospace">{{amount}}</h3>
-    </div>
-    {% endif %}
-    {% endfor %}
+<div class="balances">
+    <!-- Bank Balances -->
+       <!-- <h1>{{ ls.first_name }} {{ ls.last_name }}</h1>
+        <h1>{{ ls.person.email_pin }}</h1> -->
+
+        <div class="d-flex justify-content-center gap-3">
+            {% for bank, amount in ls.person.bankaccounts.items %}
+            {% if bank != "NONE" %}
+            <div class="border border-dark border-4 w-50 p-3 boxes">
+                <h2 class="text-center">{{bank}}</h2>
+                <h3 class="text-center font-monospace">{{amount}}</h3>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
 </div>
 
-<table class="table table-striped">
-    <tr>
-        <th>Log ID</th>
-        <th>Date</th>
-        <th>Transaction Type</th>
-        <th>Category</th>
-        <th>Amount</th>
-        <th>Start Bank</th>
-        <th>End Bank</th>
-    </tr>
+<div class="big-group">
+    <section class="left-panel">
+        <!-- Buttons -->
+        <a href="#" class="b">
+            <div class="groups">
+                <!-- Update Profile -->
+                <div class="icon">
+                    <!-- Icon -->
+                </div>
+                <div class="text">
+                    <!-- Text -->
+                    <h1 class="title">Profile</h1>
+                    <p class="quote">Lorem Ipsum</p>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="b">
+            <div class="groups">
+                <!-- Update Profile -->
+                <div class="icon">
+                    <!-- Icon -->
+                </div>
+                <div class="text">
+                    <!-- Text -->
+                    <h1 class="title">Bank Accounts</h1>
+                    <p class="quote">Lorem Ipsum</p>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="b">
+            <div class="groups">
+                <!-- Update Profile -->
+                <div class="icon">
+                    <!-- Icon -->
+                </div>
+                <div class="text">
+                    <!-- Text -->
+                    <h1 class="title">Budget</h1>
+                    <p class="quote">Lorem Ipsum</p>
+                </div>
+            </div>
+        </a>
+    </section>
 
-    {% for key, t in ls.person.moneytransactions.items %}
-        {% if key != "0" %}
-        <tr>
-        <td>{{ key }}</td>
-        <td>{{ t.date }}</td>
-        <td>{{ t.type }}</td>
-        <td>{{ t.category }}</td>
-        <td>{{ t.amount }}</td>
-        <td>{{ t.startBank }}</td>
-        <td>{{ t.endBank }}</td>
-        </tr>
-       {% endif %} 
-    {% endfor %}
+    <section class="right-panel">
+        <!-- Table -->
+        <div>
+            <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>Account</th>
+                <th>Transaction</th>
+                <th>Category</th>
+                <th>Amount</th>
+            </tr>
 
-</table>
+            {% for t in last_transactions %}
+                {% if key != "0" %}
+                <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.endBank }}</td>
+                <td>{{ t.type }}</td>
+                <td>{{ t.category }}</td>
+                <td>{{ t.amount }}</td>
+
+                </tr>
+            {% endif %} 
+            {% endfor %}
+        </table>
+        </div>
+
+        <div>
+            <h1>Money Conversion API</h1>
+        </div>
+        
+    </section>
+
 {% endblock %}

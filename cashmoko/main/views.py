@@ -64,11 +64,11 @@ def userpage(response):
     # moneytransactions = person.moneytransactions
     # new_log = {
     #     "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
-    #     "type": "debit",
+    #     "type": "credit",
     #     "category": "allowance",
-    #     "amount": 1,
+    #     "amount": 10,
     #     "startBank": "None",
-    #     "endBank": "maya",
+    #     "endBank": "Ipon",
     #     "done": False,
     # }
     # transaction_id = len(moneytransactions)  # Use the length as a unique key
@@ -88,4 +88,11 @@ def userpage(response):
             v["done"] = True
 
     person.save()
-    return render(response, "main/userpage.html", {"ls": ls})
+    m = person.moneytransactions
+    last_transactions = list(list(m.values())[::-1])[:8]
+    print(last_transactions)
+    return render(
+        response,
+        "main/userpage.html",
+        {"ls": ls, "last_transactions": last_transactions},
+    )
