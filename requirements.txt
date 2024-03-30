@@ -1,0 +1,4 @@
+freecurrencyapi 
+django
+django-crispy-forms 
+email-to
