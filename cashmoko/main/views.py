@@ -7,6 +7,7 @@ from django.contrib import messages
 from .models import Person
 from register.forms import CreatePerson
 from .quotes import quote
+from .currency import get_currency
 import random
 import datetime
 import pytz
@@ -34,8 +35,12 @@ def emailMessage(user, p):
         smtp.send_message(email_msg)
 
 
-def logout_user(request):
-    logout(request)
+def logout_user(response):
+    ls = response.user
+    person = ls.person
+    person.new_login = True
+    person.save()
+    logout(response)
     return redirect("home")
 
 
@@ -47,6 +52,7 @@ def home(response):
 @csrf_protect
 @login_required
 def userpage(response):
+
     ls = response.user
     if ls.person.verified == False:
         p = ls.person
@@ -54,11 +60,13 @@ def userpage(response):
         return redirect("verifyEmail")
 
     person = ls.person
+    if person.new_login:
+        person.new_login = False
+        person.quote = quote()["quote"]
+        person.currency = get_currency()
+
     m = person.moneytransactions
     banks = person.bankaccounts
-    # print(banks)
-
-    # print(banks)
 
     ## Guide for making new transactions
     # person = ls.person
@@ -90,10 +98,10 @@ def userpage(response):
 
     person.save()
     last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"][:8]
-    # print(last_transactions)
-    q = quote()["quote"]
+    q = person.quote
+    currencies = person.currency
     return render(
         response,
         "main/userpage.html",
-        {"ls": ls, "last_transactions": last_transactions, "q": q},
+        {"ls": ls, "last_transactions": last_transactions, "q": q, "currencies": currencies}
     )

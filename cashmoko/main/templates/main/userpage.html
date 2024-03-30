@@ -104,6 +104,9 @@ Transactions
 
         <div class="conversion">
             <h1>Money Conversion API</h1>
+            {% for c, v in currencies.items %}
+                <p class="currencies" style="color: white;">PHP to {{c}} : {{v}}</p>
+            {% endfor %}
         </div>
         
     </section>

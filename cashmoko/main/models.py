@@ -9,3 +9,6 @@ class Person(models.Model):
     moneytransactions = models.JSONField(default=dict)
     bankaccounts = models.JSONField(default=dict)
     verified = models.BooleanField(default=False)
+    new_login = models.BooleanField(default=True)
+    quote = models.TextField(default="")
+    currency = models.JSONField(default=dict)
