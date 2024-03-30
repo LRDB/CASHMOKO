@@ -3,7 +3,7 @@
     align-items: center;
     height: 18vh;
     justify-content: center;
-    margin: 0.5rem 1rem;
+    margin: 0.5rem;
     padding: 0.25rem;
     background-color: purple;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
@@ -11,13 +11,13 @@
 }
 
 .boxes {
-    width: 250px;
+    width: 15vw;
 }
 
 .big-group {
     display: flex;
     height: 70vh;
-    margin: 0.5rem;
+    margin: 0.5rem 0rem;
 }
 
 .b {
