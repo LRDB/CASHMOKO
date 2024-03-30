@@ -53,25 +53,38 @@
 }
 
 .icon {
-    width: 19vh;
+    width: calc(30% - 4rem);
+    /* Adjust the width based on the desired ratio */
     height: auto;
     background-color: black;
-    border-radius: 75%;
+    border-radius: 50%;
     position: relative;
 }
 
 .icon img {
     width: 100%;
-    /* Ensure the image fills the container */
     height: 100%;
     object-fit: cover;
-    /* Maintain aspect ratio and cover the entire container */
     clip-path: circle(50%);
-    /* Clip the image to a circle shape */
 }
 
-
 .text {
+    width: calc(70% - 4rem);
+    /* Adjust the width based on the desired ratio */
     font-size: 1.5rem;
-    margin: 2rem;
+    padding: 0% 2%;
+    margin: 1rem 0rem 1rem 1rem;
+}
+
+.quote {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    /* Using clamp() for font size */
+}
+
+.t {
+    height: 65%;
+}
+
+.conversion {
+    height: 35%;
 }

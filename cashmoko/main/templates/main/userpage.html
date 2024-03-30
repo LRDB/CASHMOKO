@@ -44,7 +44,7 @@ Transactions
                 <div class="text">
                     <!-- Text -->
                     <h1 class="title">Profile</h1>
-                    <p class="quote">Lorem Ipsum</p>
+                    <p class="quote">"{{q}}"</p>
                 </div>
             </div>
         </a>
@@ -80,7 +80,7 @@ Transactions
 
     <section class="right-panel">
         <!-- Table -->
-        <div>
+        <div class="t">
             <table class="table table-striped">
             <tr>
                 <th>Date</th>
@@ -91,21 +91,18 @@ Transactions
             </tr>
 
             {% for t in last_transactions %}
-                {% if key != "0" %}
                 <tr>
                 <td>{{ t.date }}</td>
                 <td>{{ t.endBank }}</td>
                 <td>{{ t.type }}</td>
                 <td>{{ t.category }}</td>
                 <td>{{ t.amount }}</td>
-
                 </tr>
-            {% endif %} 
             {% endfor %}
         </table>
         </div>
 
-        <div>
+        <div class="conversion">
             <h1>Money Conversion API</h1>
         </div>
         

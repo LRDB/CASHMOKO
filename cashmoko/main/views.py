@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from .models import Person
 from register.forms import CreatePerson
+from .quotes import quote
 import random
 import datetime
 import pytz
@@ -65,10 +66,10 @@ def userpage(response):
     # new_log = {
     #     "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
     #     "type": "credit",
-    #     "category": "allowance",
-    #     "amount": 10,
+    #     "category": "transportation",
+    #     "amount": 700,
     #     "startBank": "None",
-    #     "endBank": "Ipon",
+    #     "endBank": "Wallet",
     #     "done": False,
     # }
     # transaction_id = len(moneytransactions)  # Use the length as a unique key
@@ -88,11 +89,11 @@ def userpage(response):
             v["done"] = True
 
     person.save()
-    m = person.moneytransactions
-    last_transactions = list(list(m.values())[::-1])[:8]
+    last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"][:8]
     # print(last_transactions)
+    q = quote()["quote"]
     return render(
         response,
         "main/userpage.html",
-        {"ls": ls, "last_transactions": last_transactions},
+        {"ls": ls, "last_transactions": last_transactions, "q": q},
     )
