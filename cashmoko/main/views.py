@@ -90,7 +90,7 @@ def userpage(response):
     person.save()
     m = person.moneytransactions
     last_transactions = list(list(m.values())[::-1])[:8]
-    print(last_transactions)
+    # print(last_transactions)
     return render(
         response,
         "main/userpage.html",

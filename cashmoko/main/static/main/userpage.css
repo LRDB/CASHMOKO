@@ -45,21 +45,33 @@
 .groups {
     display: flex;
     width: auto;
-    height: 20vh;
+    height: 21vh;
     background-color: green;
-    padding: 1.25rem;
-    margin: 1rem;
+    padding: 0.75rem;
+    margin: 0.45rem 0.5rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .icon {
-    width: 18vh;
+    width: 19vh;
     height: auto;
     background-color: black;
     border-radius: 75%;
+    position: relative;
 }
+
+.icon img {
+    width: 100%;
+    /* Ensure the image fills the container */
+    height: 100%;
+    object-fit: cover;
+    /* Maintain aspect ratio and cover the entire container */
+    clip-path: circle(50%);
+    /* Clip the image to a circle shape */
+}
+
 
 .text {
     font-size: 1.5rem;
-    margin: 1rem;
+    margin: 2rem;
 }
