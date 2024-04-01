@@ -69,13 +69,12 @@ def userpage(response):
     banks = person.bankaccounts
 
     ## Guide for making new transactions
-    # person = ls.person
     # moneytransactions = person.moneytransactions
     # new_log = {
     #     "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
     #     "type": "credit",
-    #     "category": "transportation",
-    #     "amount": 700,
+    #     "category": "KPOP Album",
+    #     "amount": 483,
     #     "startBank": "None",
     #     "endBank": "Wallet",
     #     "done": False,
@@ -103,5 +102,10 @@ def userpage(response):
     return render(
         response,
         "main/userpage.html",
-        {"ls": ls, "last_transactions": last_transactions, "q": q, "currencies": currencies}
+        {
+            "ls": ls,
+            "last_transactions": last_transactions,
+            "q": q,
+            "currencies": currencies,
+        },
     )
