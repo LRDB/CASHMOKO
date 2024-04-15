@@ -8,10 +8,6 @@ Transactions
 "static/main/userpage.css"
 {% endblock %}
 
-{% block username%}
-{{ls.username}}
-{% endblock %}
-
 {% block content %}
 
 <div class="balances">
@@ -48,7 +44,7 @@ Transactions
                 </div>
             </div>
         </a>
-        <a href="#" class="b">
+        <a href="{% url 'user_balances' %}" class="b">
             <div class="groups">
                 <!-- Update Profile -->
                 <div class="icon">
@@ -58,7 +54,9 @@ Transactions
                 <div class="text">
                     <!-- Text -->
                     <h1 class="title">Bank Accounts</h1>
-                    <p class="quote">Lorem Ipsum</p>
+                    {% for type, amount in accounts.items %}
+                        <p class="totalBalances">{{type}}: {{amount}}</p>
+                    {% endfor %}
                 </div>
             </div>
         </a>

@@ -71,7 +71,6 @@
 .text {
     width: calc(70% - 4rem);
     /* Adjust the width based on the desired ratio */
-    font-size: 1.5rem;
     padding: 0% 2%;
     margin: 1rem 0rem 1rem 1rem;
 }
@@ -91,4 +90,8 @@
 
 .currencies {
     color: white;
+}
+
+.totalBalances {
+    font-size: clamp(1rem, 1.5vw, 1.1rem)
 }

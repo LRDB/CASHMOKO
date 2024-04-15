@@ -4,5 +4,11 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("userpage", views.userpage, name="userpage"),
-    path("logout_user" , views.logout_user, name="logout_user")
+    path("logout_user", views.logout_user, name="logout_user"),
+    path("user_balances", views.user_balances, name="user_balances"),
+    path("Debit", views.Debit, name="Debit"),
+    path("Credit", views.Credit, name="Credit"),
+    path("Manual Edit", views.Manual_Edit, name="Manual Edit"),
+    path("Bank Transfer", views.Bank_Transfer, name="Bank Transfer"),
+    path("Transactions", views.Transactions, name="Transactions"),
 ]

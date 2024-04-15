@@ -52,6 +52,7 @@ def home(response):
 @csrf_protect
 @login_required
 def userpage(response):
+    accounts = {"Cash": 0.0, "E-Wallet": 0.0, "Bank": 0.0}
 
     ls = response.user
     if ls.person.verified == False:
@@ -95,6 +96,14 @@ def userpage(response):
                 banks[end] += v["amount"]
             v["done"] = True
 
+    for bank in banks:
+        if bank in ["BDO", "BPI"]:
+            accounts["Bank"] += banks[bank]
+        elif bank == "Wallet".upper():
+            accounts["Cash"] += banks[bank]
+        elif bank in ["MAYA", "GCASH"]:
+            accounts["E-Wallet"] += banks[bank]
+
     person.save()
     last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"][:8]
     q = person.quote
@@ -107,5 +116,78 @@ def userpage(response):
             "last_transactions": last_transactions,
             "q": q,
             "currencies": currencies,
+            "accounts": accounts,
+        },
+    )
+
+
+@csrf_protect
+@login_required
+def user_balances(response):
+    accounts = {"Cash": 0.0, "E-Wallet": 0.0, "Bank": 0.0}
+    transaction_types = [
+        "Debit",
+        "Credit",
+        "Bank Transfer",
+        "Manual Edit",
+        "Transactions",
+    ]
+
+    ls = response.user
+    person = ls.person
+    m = person.moneytransactions
+    banks = person.bankaccounts
+
+    for bank in banks:
+        if bank in ["BDO", "BPI"]:
+            accounts["Bank"] += banks[bank]
+        elif bank == "Wallet".upper():
+            accounts["Cash"] += banks[bank]
+        elif bank in ["MAYA", "GCASH"]:
+            accounts["E-Wallet"] += banks[bank]
+
+    return render(
+        response,
+        "main/userbalances.html",
+        {
+            "ls": ls,
+            "transaction_types": transaction_types,
+            "accounts": accounts,
+        },
+    )
+
+
+def Debit(response):
+    ls = response.user
+    return render(response, "main/debit.html", {"ls": ls})
+
+
+def Credit(response):
+    ls = response.user
+    return render(response, "main/credit.html", {"ls": ls})
+
+
+def Manual_Edit(response):
+    ls = response.user
+    return render(response, "main/manual_edit.html", {"ls": ls})
+
+
+def Bank_Transfer(response):
+    ls = response.user
+    return render(response, "main/bank_transfer.html", {"ls": ls})
+
+
+def Transactions(response):
+    ls = response.user
+    person = ls.person
+    m = person.moneytransactions
+    banks = person.bankaccounts
+    last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"]
+    return render(
+        response,
+        "main/transactions.html",
+        {
+            "ls": ls,
+            "last_transactions": last_transactions,
         },
     )
