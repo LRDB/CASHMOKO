@@ -8,6 +8,7 @@ import datetime
 import pytz
 
 TIMEZONE = pytz.timezone("Asia/Manila")
+INITIAL_BALANCE = round(0.00, 2)
 
 
 # Create your views here.
@@ -31,13 +32,13 @@ def register(response):
             }
 
             bankaccounts = {
-                "BDO": 0,
-                "BPI": 0,
-                "MAYA": 0,
-                "GCASH": 0,
-                "WALLET": 0,
-                "IPON": 0,
-                "NONE": 0,
+                "BDO": INITIAL_BALANCE,
+                "BPI": INITIAL_BALANCE,
+                "MAYA": INITIAL_BALANCE,
+                "GCASH": INITIAL_BALANCE,
+                "WALLET": INITIAL_BALANCE,
+                "IPON": INITIAL_BALANCE,
+                "NONE": INITIAL_BALANCE,
             }
             user = form.save(commit=False)
             user.first_name = form.cleaned_data["firstname"]

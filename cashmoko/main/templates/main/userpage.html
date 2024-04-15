@@ -55,22 +55,22 @@ Transactions
                     <!-- Text -->
                     <h1 class="title">Bank Accounts</h1>
                     {% for type, amount in accounts.items %}
-                        <p class="totalBalances">{{type}}: {{amount}}</p>
+                        <p class="totalBalances">{{type}}: ₱ {{amount}}</p>
                     {% endfor %}
                 </div>
             </div>
         </a>
-        <a href="#" class="b">
+        <a href="{% url 'iponchallenge' %}" class="b">
             <div class="groups">
-                <!-- Update Profile -->
+                <!-- Ipon Challenge -->
                 <div class="icon">
                     <!-- Icon -->
                     <img src="https://t3.ftcdn.net/jpg/06/16/73/38/360_F_616733889_AmXsyEL0Xx8foHNB37oxzUZ1jfmVvqll.jpg" alt="alternatetext">
                 </div>
                 <div class="text">
                     <!-- Text -->
-                    <h1 class="title">Budget</h1>
-                    <p class="quote">Lorem Ipsum</p>
+                    <h1 class="title">Ipon Challenge</h1>
+                    <p class="quote">Total: ₱ {{ls.person.bankaccounts.IPON}}</p>
                 </div>
             </div>
         </a>

@@ -157,6 +157,11 @@ def user_balances(response):
     )
 
 
+def iponchallenge(response):
+    ls = response.user
+    return render(response, "main/iponchallenge.html", {"ls": ls})
+
+
 def Debit(response):
     ls = response.user
     return render(response, "main/debit.html", {"ls": ls})
