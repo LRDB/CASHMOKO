@@ -157,31 +157,43 @@ def user_balances(response):
     )
 
 
+@csrf_protect
+@login_required
 def iponchallenge(response):
     ls = response.user
     return render(response, "main/iponchallenge.html", {"ls": ls})
 
 
+@csrf_protect
+@login_required
 def Debit(response):
     ls = response.user
     return render(response, "main/debit.html", {"ls": ls})
 
 
+@csrf_protect
+@login_required
 def Credit(response):
     ls = response.user
     return render(response, "main/credit.html", {"ls": ls})
 
 
+@csrf_protect
+@login_required
 def Manual_Edit(response):
     ls = response.user
     return render(response, "main/manual_edit.html", {"ls": ls})
 
 
+@csrf_protect
+@login_required
 def Bank_Transfer(response):
     ls = response.user
     return render(response, "main/bank_transfer.html", {"ls": ls})
 
 
+@csrf_protect
+@login_required
 def Transactions(response):
     ls = response.user
     person = ls.person
