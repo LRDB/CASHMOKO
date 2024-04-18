@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.contrib import messages
 from .models import Person
+from .forms import CreateTransactionEntry
 from register.forms import CreatePerson
 from .quotes import quote
 from .currency import get_currency
@@ -68,20 +69,6 @@ def userpage(response):
 
     m = person.moneytransactions
     banks = person.bankaccounts
-
-    ## Guide for making new transactions
-    # moneytransactions = person.moneytransactions
-    # new_log = {
-    #     "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
-    #     "type": "credit",
-    #     "category": "KPOP Album",
-    #     "amount": 483,
-    #     "startBank": "None",
-    #     "endBank": "Wallet",
-    #     "done": False,
-    # }
-    # transaction_id = len(moneytransactions)  # Use the length as a unique key
-    # moneytransactions[str(transaction_id)] = new_log
 
     for k, v in m.items():
         if v["done"] == False:
@@ -168,14 +155,54 @@ def iponchallenge(response):
 @login_required
 def Debit(response):
     ls = response.user
-    return render(response, "main/debit.html", {"ls": ls})
+    person = ls.person
+    
+    if response.method == "POST":
+        form = CreateTransactionEntry(response.POST)
+        moneytransactions = person.moneytransactions
+        if form.is_valid():
+            new_log = {
+                "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
+                "type":"debit",
+                "category":form.cleaned_data["category"],
+                "amount":form.cleaned_data["amount"],
+                "startBank":form.cleaned_data["startBank"],
+                "endBank":form.cleaned_data["endBank"],
+                "done":False,
+            }
+            transaction_id = len(moneytransactions)  # Use the length as a unique key
+            moneytransactions[str(transaction_id)] = new_log
+            person.save()
+    else:
+        form = CreateTransactionEntry()
+    return render(response, "main/debit.html", {"form": form, "ls":ls})
 
 
 @csrf_protect
 @login_required
 def Credit(response):
     ls = response.user
-    return render(response, "main/credit.html", {"ls": ls})
+    person = ls.person
+    
+    if response.method == "POST":
+        form = CreateTransactionEntry(response.POST)
+        moneytransactions = person.moneytransactions
+        if form.is_valid():
+            new_log = {
+                "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
+                "type":"credit",
+                "category":form.cleaned_data["category"],
+                "amount":form.cleaned_data["amount"],
+                "startBank":form.cleaned_data["startBank"],
+                "endBank":form.cleaned_data["endBank"],
+                "done":False,
+            }
+            transaction_id = len(moneytransactions)  # Use the length as a unique key
+            moneytransactions[str(transaction_id)] = new_log
+            person.save()
+    else:
+        form = CreateTransactionEntry()
+    return render(response, "main/credit.html", {"form": form, "ls": ls})
 
 
 @csrf_protect
