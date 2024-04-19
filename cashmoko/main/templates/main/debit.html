@@ -10,7 +10,13 @@ Debit
 
 <form action = "Debit" method = "post">
 	{% csrf_token %}
-	{{form }}
+	{{ form }}
 	<input type="submit" value="Submit">
+
+	{% if messages %}
+		{% for message in messages %}
+			<h4>{{ message }}</h4>
+		{% endfor %}
+	{% endif %}
 </form>
 {% endblock %}

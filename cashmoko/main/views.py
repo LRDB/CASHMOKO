@@ -70,18 +70,18 @@ def userpage(response):
     m = person.moneytransactions
     banks = person.bankaccounts
 
-    for k, v in m.items():
-        if v["done"] == False:
-            end = v["endBank"].upper()
-            start = v["startBank"].upper()
-            if v["type"] == "debit":
-                banks[end] += v["amount"]
-            elif v["type"] == "credit":
-                banks[end] -= v["amount"]
-            elif v["type"] == "banktransfer":
-                banks[start] -= v["amount"]
-                banks[end] += v["amount"]
-            v["done"] = True
+    # for k, v in m.items():
+    #     if v["done"] == False:
+    #         end = v["endBank"].upper()
+    #         start = v["startBank"].upper()
+    #         if v["type"] == "debit":
+    #             banks[end] += v["amount"]
+    #         elif v["type"] == "credit":
+    #             banks[end] -= v["amount"]
+    #         elif v["type"] == "banktransfer":
+    #             banks[start] -= v["amount"]
+    #             banks[end] += v["amount"]
+    #         v["done"] = True
 
     for bank in banks:
         if bank in ["BDO", "BPI"]:
@@ -92,7 +92,7 @@ def userpage(response):
             accounts["E-Wallet"] += banks[bank]
 
     person.save()
-    last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"][:8]
+    last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"][:10]
     q = person.quote
     currencies = person.currency
     return render(
@@ -156,26 +156,43 @@ def iponchallenge(response):
 def Debit(response):
     ls = response.user
     person = ls.person
-    
+
+    message = None
+
     if response.method == "POST":
         form = CreateTransactionEntry(response.POST)
         moneytransactions = person.moneytransactions
         if form.is_valid():
             new_log = {
-                "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
-                "type":"debit",
-                "category":form.cleaned_data["category"],
-                "amount":form.cleaned_data["amount"],
-                "startBank":form.cleaned_data["startBank"],
-                "endBank":form.cleaned_data["endBank"],
-                "done":False,
+                "date": str(
+                    datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                ),
+                "type": "debit",
+                "category": form.cleaned_data["category"],
+                "amount": form.cleaned_data["amount"],
+                "startBank": "None",
+                "endBank": form.cleaned_data["endBank"],
+                "done": False,
             }
             transaction_id = len(moneytransactions)  # Use the length as a unique key
             moneytransactions[str(transaction_id)] = new_log
             person.save()
+
+        m = person.moneytransactions
+        banks = person.bankaccounts
+        for k, v in m.items():
+            end = v["endBank"].upper()
+            if v["type"] == "debit" and v["done"] == False:
+                banks[end] += v["amount"]
+            v["done"] = True
+
+        person.save()
+        message = messages.success(response, "Transaction successful!")
     else:
         form = CreateTransactionEntry()
-    return render(response, "main/debit.html", {"form": form, "ls":ls})
+    return render(
+        response, "main/debit.html", {"form": form, "ls": ls, "message": message}
+    )
 
 
 @csrf_protect
@@ -183,26 +200,44 @@ def Debit(response):
 def Credit(response):
     ls = response.user
     person = ls.person
-    
+
+    message = None
     if response.method == "POST":
         form = CreateTransactionEntry(response.POST)
         moneytransactions = person.moneytransactions
         if form.is_valid():
             new_log = {
-                "date": str(datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")),
-                "type":"credit",
-                "category":form.cleaned_data["category"],
-                "amount":form.cleaned_data["amount"],
-                "startBank":form.cleaned_data["startBank"],
-                "endBank":form.cleaned_data["endBank"],
-                "done":False,
+                "date": str(
+                    datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                ),
+                "type": "credit",
+                "category": form.cleaned_data["category"],
+                "amount": form.cleaned_data["amount"],
+                "startBank": "None",
+                "endBank": form.cleaned_data["endBank"],
+                "done": False,
             }
             transaction_id = len(moneytransactions)  # Use the length as a unique key
             moneytransactions[str(transaction_id)] = new_log
             person.save()
+
+        m = person.moneytransactions
+        banks = person.bankaccounts
+        for k, v in m.items():
+            end = v["endBank"].upper()
+            if v["type"] == "credit" and v["done"] == False:
+                banks[end] -= v["amount"]
+            v["done"] = True
+
+        person.save()
+
+        message = messages.success(response, "Transaction successful!")
     else:
         form = CreateTransactionEntry()
-    return render(response, "main/credit.html", {"form": form, "ls": ls})
+
+    return render(
+        response, "main/credit.html", {"form": form, "ls": ls, "message": message}
+    )
 
 
 @csrf_protect
