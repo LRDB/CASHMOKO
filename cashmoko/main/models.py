@@ -12,3 +12,5 @@ class Person(models.Model):
     new_login = models.BooleanField(default=True)
     quote = models.TextField(default="")
     currency = models.JSONField(default=dict)
+    dep_category = models.JSONField(default=dict)
+    cred_category = models.JSONField(default=dict)

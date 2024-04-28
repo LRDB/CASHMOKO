@@ -12,4 +12,5 @@ urlpatterns = [
     path("Manual Edit", views.Manual_Edit, name="Manual Edit"),
     path("Bank Transfer", views.Bank_Transfer, name="Bank Transfer"),
     path("Transactions", views.Transactions, name="Transactions"),
+    path("profile", views.profile, name="profile"),
 ]

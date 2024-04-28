@@ -40,6 +40,26 @@ def register(response):
                 "IPON": INITIAL_BALANCE,
                 "NONE": INITIAL_BALANCE,
             }
+
+            categories = {
+                "deposit": {
+                    "Allowance": "Allowance",
+                    "Scholarship": "Scholarship",
+                    "Donation": "Donation",
+                    "Salary": "Salary",
+                },
+                "credit": {
+                    "Food": "Food",
+                    "Transportation": "Transportation",
+                    "Rent": "Rent",
+                    "Utilities": "Utilities",
+                    "Clothes": "Clothes",
+                    "Medicine": "Medicine",
+                    "Grocery": "Grocery",
+                    "Insurance": "Insurance",
+                    "Lifestyle": "Lifestyle",
+                },
+            }
             user = form.save(commit=False)
             user.first_name = form.cleaned_data["firstname"]
             user.last_name = form.cleaned_data["lastname"]
@@ -50,6 +70,8 @@ def register(response):
                 moneytransactions=moneytransactions,
                 bankaccounts=bankaccounts,
                 verified=False,
+                dep_category=categories["deposit"],
+                cred_category=categories["credit"],
             )
             messages.success(response, "Sign-up was successful")
             return redirect("login")

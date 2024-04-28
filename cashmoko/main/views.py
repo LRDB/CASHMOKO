@@ -160,7 +160,7 @@ def Debit(response):
     message = None
 
     if response.method == "POST":
-        form = CreateTransactionEntry(response.POST)
+        form = CreateTransactionEntry(ls, "dep_category", response.POST)
         moneytransactions = person.moneytransactions
         if form.is_valid():
             new_log = {
@@ -189,7 +189,7 @@ def Debit(response):
         person.save()
         message = messages.success(response, "Transaction successful!")
     else:
-        form = CreateTransactionEntry()
+        form = CreateTransactionEntry(ls, "dep_category")
     return render(
         response, "main/debit.html", {"form": form, "ls": ls, "message": message}
     )
@@ -203,7 +203,7 @@ def Credit(response):
 
     message = None
     if response.method == "POST":
-        form = CreateTransactionEntry(response.POST)
+        form = CreateTransactionEntry(ls, "cred_category", response.POST)
         moneytransactions = person.moneytransactions
         if form.is_valid():
             new_log = {
@@ -233,7 +233,7 @@ def Credit(response):
 
         message = messages.success(response, "Transaction successful!")
     else:
-        form = CreateTransactionEntry()
+        form = CreateTransactionEntry(ls, "cred_category")
 
     return render(
         response, "main/credit.html", {"form": form, "ls": ls, "message": message}
@@ -269,4 +269,50 @@ def Transactions(response):
             "ls": ls,
             "last_transactions": last_transactions,
         },
+    )
+
+
+@csrf_protect
+@login_required
+def profile(response):
+    ls = response.user
+    person = ls.person
+    banks = ", ".join([key for key in person.bankaccounts.keys() if key != "NONE"])
+
+    if response.method == "POST":
+        if "inputFirstName" in response.POST:
+            fname = response.POST["inputFirstName"]
+            if fname:
+                ls.first_name = fname
+                ls.save()
+        if "inputLastName" in response.POST:
+            lname = response.POST["inputLastName"]
+            if lname:
+                ls.last_name = lname
+                ls.save()
+        if "dep_cat" in response.POST:
+            dep_cat = response.POST["dep_cat"].title()
+            if dep_cat:
+                if dep_cat in person.dep_category:
+                    del person.dep_category[dep_cat]  # Remove the category if it exists
+                else:
+                    person.dep_category[dep_cat] = dep_cat
+                person.save()
+
+        if "cred_cat" in response.POST:
+            cred_cat = response.POST["cred_cat"].title()
+            if cred_cat:
+                if cred_cat in person.cred_category:
+                    del person.cred_category[
+                        cred_cat
+                    ]  # Remove the category if it exists
+                else:
+                    person.cred_category[cred_cat] = cred_cat
+                person.save()
+
+        return redirect("profile")
+    return render(
+        response,
+        "main/profile.html",
+        {"ls": ls, "banks": banks},
     )
