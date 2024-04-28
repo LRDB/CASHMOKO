@@ -1,38 +1,3 @@
-# from django import forms
-# from .models import Person
-
-# Bank_Choices = (
-#     ("Gcash", "Gcash"),
-#     ("BPI", "BPI"),
-#     ("BDO", "BDO"),
-#     ("Maya", "Maya"),
-#     ("Wallet", "Wallet"),
-#     ("Ipon", "Ipon"),
-#     ("None", "None"),
-# )
-
-
-# class CreateTransactionEntry(forms.Form):
-
-#     # category = forms.CharField(label="Category", max_length=200)
-#     CHOICES = {"1": "First", "2": "Second"}
-#     category = forms.ChoiceField(widget=forms.Select, choices=CHOICES)
-
-#     amount = forms.IntegerField(label="Amount")
-#     # startBank = forms.ChoiceField(choices = Bank_Choices)
-#     endBank = forms.ChoiceField(choices=Bank_Choices)
-
-
-# # class CreateTransactionEntry(forms.Form):
-# #     amount = forms.IntegerField(label="Amount")
-# #     endBank = forms.ChoiceField(choices=Bank_Choices)
-
-# #     def __init__(self, *args, **kwargs):
-# #         super(CreateTransactionEntry, self).__init__(*args, **kwargs)
-# #         self.fields["category"] = forms.ChoiceField(
-# #             widget=forms.Select, choices=[(x.id, x.name) for x in Person.objects.all()]
-# #         )
-
 from django import forms
 from .models import Person
 
