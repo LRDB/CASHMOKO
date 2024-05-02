@@ -1,0 +1,112 @@
+{% extends 'main/userbase.html' %}
+
+{% block title %}
+Transactions
+{% endblock %}
+
+{% block stylesheet %}
+"static/main/userpage.css"
+{% endblock %}
+
+{% block content %}
+
+<div class="balances">
+    <!-- Bank Balances -->
+       <!-- <h1>{{ ls.first_name }} {{ ls.last_name }}</h1>
+        <h1>{{ ls.person.email_pin }}</h1> -->
+
+        <div class="d-flex justify-content-center gap-3">
+            {% for bank, amount in ls.person.bankaccounts.items %}
+            {% if bank != "NONE" %}
+            <div class="border border-dark border-4 p-3 boxes">
+                <h2 class="text-center">{{bank}}</h2>
+                <h3 class="text-center font-monospace">₱ {{amount.0}}</h3>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+</div>
+
+<div class="big-group">
+    <section class="left-panel">
+        <!-- Buttons -->
+        <a href="{% url 'profile' %}" class="b">
+            <div class="groups">
+                <!-- Update Profile -->
+                <div class="icon">
+                    <!-- Icon -->
+                    <img src="https://t3.ftcdn.net/jpg/06/16/73/38/360_F_616733889_AmXsyEL0Xx8foHNB37oxzUZ1jfmVvqll.jpg" alt="alternatetext">
+                </div>
+                <div class="text">
+                    <!-- Text -->
+                    <h1 class="title">Profile</h1>
+                    <p class="quote">"{{q}}"</p>
+                </div>
+            </div>
+        </a>
+        <a href="{% url 'user_balances' %}" class="b">
+            <div class="groups">
+                <!-- Update Profile -->
+                <div class="icon">
+                    <!-- Icon -->
+                    <img src="https://t3.ftcdn.net/jpg/06/16/73/38/360_F_616733889_AmXsyEL0Xx8foHNB37oxzUZ1jfmVvqll.jpg" alt="alternatetext">
+                </div>
+                <div class="text">
+                    <!-- Text -->
+                    <h1 class="title">Bank Accounts</h1>
+                    {% for type, amount in accounts.items %}
+                        <p class="totalBalances">{{type}}: ₱ {{amount}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </a>
+        <a href="{% url 'iponchallenge' %}" class="b">
+            <div class="groups">
+                <!-- Ipon Challenge -->
+                <div class="icon">
+                    <!-- Icon -->
+                    <img src="https://t3.ftcdn.net/jpg/06/16/73/38/360_F_616733889_AmXsyEL0Xx8foHNB37oxzUZ1jfmVvqll.jpg" alt="alternatetext">
+                </div>
+                <div class="text">
+                    <!-- Text -->
+                    <h1 class="title">Ipon Challenge</h1>
+                    <p class="quote">Total: ₱ {{ls.person.bankaccounts.IPON.0}}</p>
+                </div>
+            </div>
+        </a>
+    </section>
+
+    <section class="right-panel">
+        <!-- Table -->
+        <div class="t">
+            <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>Account</th>
+                <th>Transaction</th>
+                <th>Category</th>
+                <th>Amount</th>
+            </tr>
+
+            {% for t in last_transactions %}
+                <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.endBank }}</td>
+                <td>{{ t.type }}</td>
+                <td>{{ t.category }}</td>
+                <td>{{ t.amount }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        </div>
+
+        <div class="conversion">
+            <h1>Money Conversion API</h1>
+            {% for c, v in currencies.items %}
+                <p class="currencies" style="color: white;">PHP to {{c}} : {{v}}</p>
+            {% endfor %}
+        </div>
+        
+    </section>
+
+{% endblock %}

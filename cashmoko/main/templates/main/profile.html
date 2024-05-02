@@ -1,0 +1,135 @@
+<!-- 
+Main Reference:
+https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details
+-->
+
+{% extends 'main/userpage.html' %}
+
+{% block stylesheet %}
+"static/main/profile.css"
+{% endblock %}
+
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+    <div class="container-xll px-5 mt-3">
+        <div class="row">
+            <div class="col-xl-5">
+                <!-- Account details card-->
+                <div class="card mb-4 full-height">
+                    <div class="card-header"><h1>User Profile</h1></div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <!-- Form Group (username)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputUsername">Username</label>
+                                <p class="form-control" id="inputUsername" type="text">{{ ls.username }}</p>
+                            </div>
+                            <!-- Form Group (email address)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                <p class="form-control" id="inputEmailAddress" type="email">{{ ls.email }}</p>
+                            </div>
+                            <!-- Form Group (first name)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputFirstName">First name</label>
+                                <input class="form-control" id="inputFirstName" name="inputFirstName" type="text" value="{{ ls.first_name }}">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputLastName">Last name</label>
+                                <input class="form-control" id="inputLastName" name="inputLastName" type="text" value="{{ ls.last_name }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputBankPlatforms">Bank Platforms</label>
+                                <p class="form-control" id="inputBankPlatforms" name="inputBankPlatforms" type="text">{{ banks }}
+                                
+                                </p>
+                            </div>
+
+                            <!-- Save changes button-->
+                            <div class="buttons">
+                                <div class="m-4">
+                                <a href="{% url 'profile' %}"><button class="btn btn-primary sb" type="submit">Save Profile</button></a>
+                                </div>
+                                <div class="m-4">
+                                    <a href="{% url 'Transactions' %}"><button class="btn btn-primary sb" type="button">View Transaction History</button></a>
+                                </div>
+
+                                <div class="m-4">
+                                    <a href="#"><button class="btn btn-primary sb" type="button">Delete Account</button></a>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-xl-7 full-height">
+                <!-- Account details card-->
+                <div class="card mb-4 full-height">
+                    <div class="card-header"><h1>Custom Categories</h1></div>
+                    <div class="card-body">
+                        <div class="mb-3" style="height: 12rem;">
+                            <h2>Deposit Categories</h2>
+                            <label for="">Add or Remove a category:</label>
+                            <input type="text" name="dep_cat" id="dep_cat" value="">
+                            <a href="{% url 'profile' %}"><button class="btn btn-primary" type="submit">Update Category</button></a>
+                            <div class="row flex-container">
+                                {% for cat in ls.person.dep_category %}
+                                    <div class="flex-item">
+                                        <h5>{{ cat }}</h5>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr class="mt-0 mb-4">
+                        <div class="mb-3" style="height: 15rem;">
+                            <h2>Credit Categories</h2>
+                            <label for="">Add or Remove a category:</label>
+                            <input type="text" name="cred_cat" id="cred_cat" value="">
+                            <a href="{% url 'profile' %}"><button class="btn btn-primary" type="submit">Update Category</button></a>
+                            <div class="row flex-container">
+                                {% for cat in ls.person.cred_category %}
+                                    <div class="flex-item">
+                                        <h5>{{ cat }}</h5>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr class="mt-0 mb-4">
+                        <div class="mb-3" style="height: 10rem;">
+                            <h2>Bank Types</h2>
+                            <label for="">Add or Remove a Bank:</label>
+                            <input type="text" name="bank" id="bank" value="">
+                            <select name="bank_type" id="bank_type">
+                                <option value="WALLET">WALLET</option>
+                                <option value="EWALLET">E-WALLET</option>
+                                <option value="BANK">BANK</option>
+                                <option value="OTHERS">OTHERS</option>
+                            </select>
+                            <a href="{% url 'profile' %}"><button class="btn btn-primary" type="submit">Update Category</button></a>
+                            <div class="row flex-container">
+                                {% for cat in ls.person.banks %}
+                                    <div class="flex-item">
+                                        <h5>{{ cat }}</h5>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                                               </form>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

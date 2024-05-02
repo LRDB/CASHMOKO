@@ -1,0 +1,21 @@
+{% extends 'main/userbase.html' %}
+
+{% block title %}
+Bank Transfer
+{% endblock %}
+
+{% block content %}
+
+	<h1>Bank Transfer</h1>
+
+	<form action = "Bank Transfer" method = "POST">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" value="Submit">
+		{% if messages %}
+			{% for message in messages %}
+				<h4>{{ message }}</h4>
+			{% endfor %}
+		{% endif %}
+	</form>
+{% endblock %}

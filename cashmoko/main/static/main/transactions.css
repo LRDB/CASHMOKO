@@ -1,0 +1,16 @@
+.t {
+    display: flex;
+    align-items: center;
+    height: auto;
+    width: 80vw;
+    margin: 1rem auto;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+td {
+    font-size: 1.25rem;
+}
