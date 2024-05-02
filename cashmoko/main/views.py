@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.contrib import messages
 from .models import Person
-from .forms import CreateTransactionEntry
+from .forms import CreateTransactionEntry, CreateIponTransactionEntry
 from register.forms import CreatePerson
 from .quotes import quote
 from .currency import get_currency
@@ -148,7 +148,44 @@ def user_balances(response):
 @login_required
 def iponchallenge(response):
     ls = response.user
-    return render(response, "main/iponchallenge.html", {"ls": ls})
+    person = ls.person
+
+    message = None
+
+    if response.method == "POST":
+        form = CreateIponTransactionEntry(ls, "dep_category", response.POST)
+        moneytransactions = person.moneytransactions
+        if form.is_valid():
+            new_log = {
+                "date": str(
+                    datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                ),
+                "type": "debit",
+                "category": form.cleaned_data["category"],
+                "amount": form.cleaned_data["amount"],
+                "startBank": "None",
+                "endBank": form.cleaned_data["endBank"],
+                "done": False,
+            }
+            transaction_id = len(moneytransactions)  # Use the length as a unique key
+            moneytransactions[str(transaction_id)] = new_log
+            person.save()
+
+        m = person.moneytransactions
+        banks = person.bankaccounts
+        for k, v in m.items():
+            end = v["endBank"].upper()
+            if v["type"] == "debit" and v["done"] == False:
+                banks[end] += v["amount"]
+            v["done"] = True
+
+        person.save()
+        message = messages.success(response, "Ipon successful!")
+    else:
+        form = CreateIponTransactionEntry(ls, "dep_category")
+    return render(
+        response, "main/iponchallenge.html", {"form": form, "ls": ls, "message": message}
+    )
 
 
 @csrf_protect
@@ -244,7 +281,44 @@ def Credit(response):
 @login_required
 def Manual_Edit(response):
     ls = response.user
-    return render(response, "main/manual_edit.html", {"ls": ls})
+    person = ls.person
+
+    message = None
+
+    if response.method == "POST":
+        form = CreateTransactionEntry(ls, "adj_category", response.POST)
+        moneytransactions = person.moneytransactions
+        if form.is_valid():
+            new_log = {
+                "date": str(
+                    datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                ),
+                "type": "Manual Edit",
+                "category": "Adjustment",
+                "amount": form.cleaned_data["amount"],
+                "startBank": "None",
+                "endBank": form.cleaned_data["endBank"],
+                "done": False,
+            }
+            transaction_id = len(moneytransactions)  # Use the length as a unique key
+            moneytransactions[str(transaction_id)] = new_log
+            person.save()
+
+        m = person.moneytransactions
+        banks = person.bankaccounts
+        for k, v in m.items():
+            end = v["endBank"].upper()
+            if v["type"] == "Manual Edit" and v["done"] == False:
+                banks[end] += v["amount"]
+            v["done"] = True
+
+        person.save()
+        message = messages.success(response, "Editing successful!")
+    else:
+        form = CreateTransactionEntry(ls, "adj_category")
+    return render(
+        response, "main/manual_edit.html", {"form": form, "ls": ls, "message": message}
+    )
 
 
 @csrf_protect

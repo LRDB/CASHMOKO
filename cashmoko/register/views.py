@@ -59,6 +59,9 @@ def register(response):
                     "Insurance": "Insurance",
                     "Lifestyle": "Lifestyle",
                 },
+                "adjustments": {
+                    "Adjustments": "Adjustments",
+                },
             }
             user = form.save(commit=False)
             user.first_name = form.cleaned_data["firstname"]
@@ -72,6 +75,7 @@ def register(response):
                 verified=False,
                 dep_category=categories["deposit"],
                 cred_category=categories["credit"],
+                adj_category=categories["adjustments"],
             )
             messages.success(response, "Sign-up was successful")
             return redirect("login")

@@ -7,7 +7,7 @@ Bank_Choices = (
     ("BDO", "BDO"),
     ("Maya", "Maya"),
     ("Wallet", "Wallet"),
-    ("Ipon", "Ipon"),
+    #("Ipon", "Ipon"),
     ("None", "None"),
 )
 
@@ -36,3 +36,7 @@ class CreateTransactionEntry(forms.Form):
             choices=choices,
             widget=forms.Select,
         )
+
+class CreateIponTransactionEntry(CreateTransactionEntry):
+    Ipon_Challenge = [("Ipon","Ipon")]
+    endBank = forms.ChoiceField(choices=Ipon_Challenge)
