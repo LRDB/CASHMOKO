@@ -29,13 +29,15 @@ Transactions
 
 <div class="big-group">
     <section class="left-panel">
+
         <!-- Buttons -->
+        
         <a href="{% url 'profile' %}" class="b">
             <div class="groups">
                 <!-- Update Profile -->
                 <div class="icon">
                     <!-- Icon -->
-                    <img src="https://t3.ftcdn.net/jpg/06/16/73/38/360_F_616733889_AmXsyEL0Xx8foHNB37oxzUZ1jfmVvqll.jpg" alt="alternatetext">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" alt="alternatetext" width="100">
                 </div>
                 <div class="text">
                     <!-- Text -->
@@ -44,12 +46,13 @@ Transactions
                 </div>
             </div>
         </a>
+
         <a href="{% url 'user_balances' %}" class="b">
             <div class="groups">
                 <!-- Update Profile -->
                 <div class="icon">
                     <!-- Icon -->
-                    <img src="https://t3.ftcdn.net/jpg/06/16/73/38/360_F_616733889_AmXsyEL0Xx8foHNB37oxzUZ1jfmVvqll.jpg" alt="alternatetext">
+                    <img src="https://www.shutterstock.com/image-vector/credit-card-vector-icon-isolated-600nw-1177277911.jpg" alt="alternatetext">
                 </div>
                 <div class="text">
                     <!-- Text -->
@@ -60,12 +63,13 @@ Transactions
                 </div>
             </div>
         </a>
+
         <a href="{% url 'iponchallenge' %}" class="b">
             <div class="groups">
                 <!-- Ipon Challenge -->
                 <div class="icon">
                     <!-- Icon -->
-                    <img src="https://t3.ftcdn.net/jpg/06/16/73/38/360_F_616733889_AmXsyEL0Xx8foHNB37oxzUZ1jfmVvqll.jpg" alt="alternatetext">
+                    <img src="https://media.istockphoto.com/id/1311583041/vector/piggy-bank-icon-vector-design-illustration.jpg?s=612x612&w=0&k=20&c=lhE9JO7VlMhq9Tn9ktFYjgnZbFGGX0b9hNjQ9d88tTI=" alt="alternatetext">
                 </div>
                 <div class="text">
                     <!-- Text -->
@@ -77,6 +81,8 @@ Transactions
     </section>
 
     <section class="right-panel">
+        <h1>Transaction History</h1>
+        
         <!-- Table -->
         <div class="t">
             <table class="table table-striped">
@@ -103,7 +109,7 @@ Transactions
         <div class="conversion">
             <h1>Money Conversion API</h1>
             {% for c, v in currencies.items %}
-                <p class="currencies" style="color: white;">PHP to {{c}} : {{v}}</p>
+                <p class="currencies" style="color: black;">PHP to {{c}} : {{v}}</p>
             {% endfor %}
         </div>
         

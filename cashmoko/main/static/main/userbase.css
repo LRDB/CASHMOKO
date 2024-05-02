@@ -6,3 +6,11 @@
         flex-direction: column;
     }
 }
+
+.body{
+    background-color: #FEFDED;
+}
+
+.container-fluid{
+    background-color: #FA7070; 
+}
