@@ -5,28 +5,17 @@ Bank Transfer
 {% endblock %}
 
 {% block content %}
-    <h1>Bank Transfer</h1>
-    <form>
-        <h3>Select ORIGIN account:</h3>
-        <select id="origin" name="origin">
-            <option value="wallet">Wallet</option>
-            <option value="gcash">GCash</option>
-            <option value="bdo">BDO</option>
-            <option value="bpi">BPI</option>
-        </select>
 
-        <h3>Select DESTINATION account:</h3>
-        <select id="dest" name="dest">
-            <option value="wallet">Wallet</option>
-            <option value="gcash">GCash</option>
-            <option value="bdo">BDO</option>
-            <option value="bpi">BPI</option>
-        </select>
+	<h1>Bank Transfer</h1>
 
-        <h3>Enter AMOUNT to transfer:</h3>
-        <label for="textbox">Enter valid amount</label>
-        <input type="text" id="textbox" name="textbox">
-
-        <input type="submit" value="Submit">
-    </form>
+	<form action = "Bank Transfer" method = "POST">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" value="Submit">
+		{% if messages %}
+			{% for message in messages %}
+				<h4>{{ message }}</h4>
+			{% endfor %}
+		{% endif %}
+	</form>
 {% endblock %}

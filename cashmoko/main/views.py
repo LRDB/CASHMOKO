@@ -5,7 +5,12 @@ from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.contrib import messages
 from .models import Person
-from .forms import CreateTransactionEntry, CreateIponTransactionEntry
+from .forms import (
+    CreateTransactionEntry,
+    CreateIponTransactionEntry,
+    BankTransactionEntry,
+    BankTransferTransactionEntry,
+)
 from register.forms import CreatePerson
 from .quotes import quote
 from .currency import get_currency
@@ -70,19 +75,6 @@ def userpage(response):
     m = person.moneytransactions
     banks = person.bankaccounts
 
-    # for k, v in m.items():
-    #     if v["done"] == False:
-    #         end = v["endBank"].upper()
-    #         start = v["startBank"].upper()
-    #         if v["type"] == "debit":
-    #             banks[end] += v["amount"]
-    #         elif v["type"] == "credit":
-    #             banks[end] -= v["amount"]
-    #         elif v["type"] == "banktransfer":
-    #             banks[start] -= v["amount"]
-    #             banks[end] += v["amount"]
-    #         v["done"] = True
-
     for bank in banks:
         if bank in ["BDO", "BPI"]:
             accounts["Bank"] += banks[bank]
@@ -116,7 +108,7 @@ def user_balances(response):
         "Debit",
         "Credit",
         "Bank Transfer",
-        "Manual Edit",
+        "Adjustment",
         "Transactions",
     ]
 
@@ -153,7 +145,7 @@ def iponchallenge(response):
     message = None
 
     if response.method == "POST":
-        form = CreateIponTransactionEntry(ls, "dep_category", response.POST)
+        form = CreateIponTransactionEntry(ls, response.POST)
         moneytransactions = person.moneytransactions
         if form.is_valid():
             new_log = {
@@ -161,10 +153,10 @@ def iponchallenge(response):
                     datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
                 ),
                 "type": "debit",
-                "category": form.cleaned_data["category"],
+                "category": "Ipon",
                 "amount": form.cleaned_data["amount"],
                 "startBank": "None",
-                "endBank": form.cleaned_data["endBank"],
+                "endBank": "Ipon",
                 "done": False,
             }
             transaction_id = len(moneytransactions)  # Use the length as a unique key
@@ -182,9 +174,11 @@ def iponchallenge(response):
         person.save()
         message = messages.success(response, "Ipon successful!")
     else:
-        form = CreateIponTransactionEntry(ls, "dep_category")
+        form = CreateIponTransactionEntry(ls)
     return render(
-        response, "main/iponchallenge.html", {"form": form, "ls": ls, "message": message}
+        response,
+        "main/iponchallenge.html",
+        {"form": form, "ls": ls, "message": message},
     )
 
 
@@ -279,21 +273,21 @@ def Credit(response):
 
 @csrf_protect
 @login_required
-def Manual_Edit(response):
+def Adjustment(response):
     ls = response.user
     person = ls.person
 
     message = None
 
     if response.method == "POST":
-        form = CreateTransactionEntry(ls, "adj_category", response.POST)
+        form = BankTransactionEntry(ls, response.POST)
         moneytransactions = person.moneytransactions
         if form.is_valid():
             new_log = {
                 "date": str(
                     datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
                 ),
-                "type": "Manual Edit",
+                "type": "Adjustment",
                 "category": "Adjustment",
                 "amount": form.cleaned_data["amount"],
                 "startBank": "None",
@@ -303,19 +297,18 @@ def Manual_Edit(response):
             transaction_id = len(moneytransactions)  # Use the length as a unique key
             moneytransactions[str(transaction_id)] = new_log
             person.save()
-
         m = person.moneytransactions
         banks = person.bankaccounts
         for k, v in m.items():
             end = v["endBank"].upper()
-            if v["type"] == "Manual Edit" and v["done"] == False:
-                banks[end] += v["amount"]
+            if v["type"] == "Adjustment" and v["done"] == False:
+                banks[end] = v["amount"]
             v["done"] = True
 
         person.save()
         message = messages.success(response, "Editing successful!")
     else:
-        form = CreateTransactionEntry(ls, "adj_category")
+        form = BankTransactionEntry(ls)
     return render(
         response, "main/manual_edit.html", {"form": form, "ls": ls, "message": message}
     )
@@ -325,7 +318,67 @@ def Manual_Edit(response):
 @login_required
 def Bank_Transfer(response):
     ls = response.user
-    return render(response, "main/bank_transfer.html", {"ls": ls})
+    person = ls.person
+
+    message = None
+    if response.method == "POST":
+        form = BankTransferTransactionEntry(ls, response.POST)
+        moneytransactions = person.moneytransactions
+        if form.is_valid():
+
+            new_log_credit = {
+                "date": str(
+                    datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                ),
+                "type": "credit",
+                "category": "Bank Transfer",
+                "amount": form.cleaned_data["amount"],
+                "startBank": "None",
+                "endBank": form.cleaned_data["startBank"],
+                "done": False,
+            }
+
+            transaction_id = len(moneytransactions)  # Use the length as a unique key
+            moneytransactions[str(transaction_id)] = new_log_credit
+            person.save()
+
+            new_log_debit = {
+                "date": str(
+                    datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                ),
+                "type": "debit",
+                "category": "Bank Transfer",
+                "amount": form.cleaned_data["amount"],
+                "startBank": "None",
+                "endBank": form.cleaned_data["endBank"],
+                "done": False,
+            }
+
+            transaction_id = len(moneytransactions)  # Use the length as a unique key
+            moneytransactions[str(transaction_id)] = new_log_debit
+            person.save()
+
+        m = person.moneytransactions
+        banks = person.bankaccounts
+        for k, v in m.items():
+            end = v["endBank"].upper()
+            if v["type"] == "credit" and v["done"] == False:
+                banks[end] -= v["amount"]
+            if v["type"] == "debit" and v["done"] == False:
+                banks[end] += v["amount"]
+            v["done"] = True
+
+        person.save()
+
+        message = messages.success(response, "Transaction successful!")
+    else:
+        form = BankTransferTransactionEntry(ls)
+
+    return render(
+        response,
+        "main/bank_transfer.html",
+        {"form": form, "ls": ls, "message": message},
+    )
 
 
 @csrf_protect

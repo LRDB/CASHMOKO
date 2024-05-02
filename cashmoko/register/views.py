@@ -41,6 +41,15 @@ def register(response):
                 "NONE": INITIAL_BALANCE,
             }
 
+            banks = {
+                "Gcash": "Gcash",
+                "BPI": "BPI",
+                "BDO": "BDO",
+                "Maya": "Maya",
+                "Wallet": "Wallet",
+                "Ipon": "Ipon",
+            }
+
             categories = {
                 "deposit": {
                     "Allowance": "Allowance",
@@ -59,9 +68,9 @@ def register(response):
                     "Insurance": "Insurance",
                     "Lifestyle": "Lifestyle",
                 },
-                "adjustments": {
-                    "Adjustments": "Adjustments",
-                },
+                # "adjustments": {
+                #     "Adjustments": "Adjustments",
+                # },
             }
             user = form.save(commit=False)
             user.first_name = form.cleaned_data["firstname"]
@@ -72,10 +81,11 @@ def register(response):
                 email_pin=pin,
                 moneytransactions=moneytransactions,
                 bankaccounts=bankaccounts,
+                banks=banks,
                 verified=False,
                 dep_category=categories["deposit"],
                 cred_category=categories["credit"],
-                adj_category=categories["adjustments"],
+                # adj_category=categories["adjustments"],
             )
             messages.success(response, "Sign-up was successful")
             return redirect("login")

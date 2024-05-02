@@ -1,14 +1,14 @@
 {% extends 'main/userbase.html' %}
 
 {% block title %}
-Manual Edit
+Adjustment
 {% endblock %}
 
 {% block content %}
 
-	<h1>Manual Edit</h1>
+	<h1>Adjustment</h1>
 
-	<form action = "Manual Edit" method = "post">
+	<form action = "Adjustment" method = "POST">
 		{% csrf_token %}
 		{{ form }}
 		<input type="submit" value="Submit">

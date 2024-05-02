@@ -1,25 +1,57 @@
 from django import forms
 from .models import Person
 
-Bank_Choices = (
-    ("Gcash", "Gcash"),
-    ("BPI", "BPI"),
-    ("BDO", "BDO"),
-    ("Maya", "Maya"),
-    ("Wallet", "Wallet"),
-    #("Ipon", "Ipon"),
-    ("None", "None"),
-)
+# Bank_Choices = (
+#     ("Gcash", "Gcash"),
+#     ("BPI", "BPI"),
+#     ("BDO", "BDO"),
+#     ("Maya", "Maya"),
+#     ("Wallet", "Wallet"),
+#     # ("Ipon", "Ipon"),
+#     # ("None", "None"),
+# )
 
 
-class CreateTransactionEntry(forms.Form):
-
+class BasisTransactionEntry(forms.Form):
     amount = forms.IntegerField(label="Amount")
-    endBank = forms.ChoiceField(choices=Bank_Choices)
 
+    def __init__(self, user, *args, **kwargs):
+        super(BasisTransactionEntry, self).__init__(*args, **kwargs)
+
+
+class BankTransactionEntry(BasisTransactionEntry):
+    def __init__(self, user, *args, **kwargs):
+        super(BasisTransactionEntry, self).__init__(*args, **kwargs)
+        user_banks = (
+            Person.objects.filter(user=user).values_list("banks", flat=True).first()
+        )
+        if user_banks:
+            choices = [(key, key) for key in user_banks.keys()]
+        else:
+            choices = [("None", "None")]
+
+        self.fields["endBank"] = forms.ChoiceField(
+            choices=user_banks, widget=forms.Select
+        )
+
+
+class CreateTransactionEntry(BasisTransactionEntry):
     def __init__(self, user, cat, *args, **kwargs):
-        super(CreateTransactionEntry, self).__init__(*args, **kwargs)
-        # Fetch categories available for the user
+
+        super(BasisTransactionEntry, self).__init__(*args, **kwargs)
+
+        user_banks = (
+            Person.objects.filter(user=user).values_list("banks", flat=True).first()
+        )
+        if user_banks:
+            choices = [(key, key) for key in user_banks.keys()]
+        else:
+            choices = [("None", "None")]
+
+        self.fields["endBank"] = forms.ChoiceField(
+            choices=user_banks, widget=forms.Select
+        )
+
         user_categories = (
             Person.objects.filter(user=user).values_list(cat, flat=True).first()
         )
@@ -37,6 +69,27 @@ class CreateTransactionEntry(forms.Form):
             widget=forms.Select,
         )
 
-class CreateIponTransactionEntry(CreateTransactionEntry):
-    Ipon_Challenge = [("Ipon","Ipon")]
-    endBank = forms.ChoiceField(choices=Ipon_Challenge)
+
+class BankTransferTransactionEntry(BasisTransactionEntry):
+    def __init__(self, user, *args, **kwargs):
+
+        super(BasisTransactionEntry, self).__init__(*args, **kwargs)
+
+        user_banks = (
+            Person.objects.filter(user=user).values_list("banks", flat=True).first()
+        )
+        if user_banks:
+            choices = [(key, key) for key in user_banks.keys()]
+        else:
+            choices = [("None", "None")]
+
+        self.fields["startBank"] = forms.ChoiceField(
+            choices=user_banks, widget=forms.Select
+        )
+
+        self.fields["endBank"] = forms.ChoiceField(
+            choices=user_banks, widget=forms.Select
+        )
+
+
+class CreateIponTransactionEntry(BasisTransactionEntry): ...
