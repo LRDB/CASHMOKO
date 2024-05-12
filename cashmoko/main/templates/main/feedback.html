@@ -23,23 +23,23 @@ Profile
                 <div class="card mb-4 full-height">
                     <div class="card-header"><h1>Feedback</h1></div>
                     <div class="card-body">
-                        <form method="POST">
+                        <form method="POST" action="feedback">
                             {% csrf_token %}
                             <!-- Form Group (Title)-->
                             <div class="mb-3">
                                 <label class="large mb-1" for="subject">Subject</label>
-                                <input class="form-control" id="subject" type="text">
+                                <input class="form-control" id="subject" name="subject" type="text">
                             </div>
                             <!-- Form Group (Concern)-->
                             <div class="mb-3">
                                 <label class="large mb-1" for="concern">Concern</label>
-                                <textarea rows="30" cols="15" class="form-control" id="concern"></textarea>
+                                <textarea rows="30" cols="15" class="form-control" id="concern" name="concern"></textarea>
                             </div>
 
                             <!-- Save changes button-->
                             <div class="buttons">
                                 <div class="m-4">
-                                <a href="{% url 'profile' %}"><button class="btn btn-primary sb" type="submit">Submit</button></a>
+                                <a href="{% url 'feedback' %}"><button class="btn btn-primary sb" type="submit">Submit</button></a>
                                 </div>
                             </div>
                     </div>
@@ -51,16 +51,20 @@ Profile
                 <div class="card mb-4 full-height">
                     <div class="card-header"><h1>Feedback History</h1></div>
 
-                    {% for item in feedback %}
-                    <div class="card-body">
-                        <div class="mb-3" style="height: 12rem;">
-                            <h1>{{item.title}}</h1>
-                            <p>{{item.content}}</p>
-                            <p>{{item.resolved}}</p>
-                            <hr class="mt-0 mb-4">
-                        </div>
+                    <div class="card" style="width: auto; overflow-y: auto;">
+                    <ul class="list-group list-group-flush">
+                        {% for item in feedback %}
+                            {% if item.resolved == "False" %}
+                                <li class="list-group-item" style="padding: 2.5rem;">
+                                    <h3>{{item.title}}</h3>
+                                    <strong>Published on:</strong> {{item.date}} <br>
+                                    <strong>Content:</strong> {{item.content}} <br>
+                                    <strong>Resolved:</strong> {{item.resolved}}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>

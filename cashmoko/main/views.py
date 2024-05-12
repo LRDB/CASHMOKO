@@ -24,10 +24,7 @@ from cashmoko import settings
 TIMEZONE = pytz.timezone("Asia/Manila")
 
 
-def emailMessage(user, p):
-    subject = "CASHMOKO: Cash Kita Verification Pin"
-    message = f"Your pin is {p.email_pin}."
-
+def emailMessage(user, p, subject, message):
     email_msg = EmailMessage()
     email_msg["From"] = settings.EMAIL_HOST_USER
     email_msg["To"] = user.email
@@ -63,7 +60,9 @@ def userpage(response):
     ls = response.user
     if ls.person.verified == False:
         p = ls.person
-        emailMessage(ls, p)
+        emailMessage(
+            ls, p, "CASHMOKO: Cash Kita Verification Pin", f"Your pin is {p.email_pin}."
+        )
         return redirect("verifyEmail")
 
     person = ls.person
@@ -468,5 +467,29 @@ def profile(response):
 def feedback(response):
     ls = response.user
     person = ls.person
+    transaction_id = len(person.feedback.keys())
     feed = [v for k, v in list(person.feedback.items())[::-1]]
+
+    if response.method == "POST":
+        if "concern" in response.POST:
+            title = response.POST["subject"]
+            feedback = response.POST["concern"]
+            resolved = str(False)
+            transaction_id = len(person.feedback.keys())
+            if feedback:
+                transaction = {
+                    "title": title,
+                    "content": feedback,
+                    "resolved": resolved,
+                    "date": str(
+                        datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
+                    ),
+                }
+                person.feedback[str(transaction_id)] = transaction
+                person.save()
+
+                messageToUser = f'We received your feedback.\nYour concern is: "{person.feedback[str(transaction_id)]["content"]}"\n\nWe will get back to you soon.\n\nRegards,\n\nCASHMOKO: Cash Kita Team'
+
+                emailMessage(ls, person, "CASHMOKO: Feedback", messageToUser)
+            return redirect("feedback")
     return render(response, "main/feedback.html", {"feedback": feed})
