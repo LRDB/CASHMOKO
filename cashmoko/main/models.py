@@ -15,4 +15,5 @@ class Person(models.Model):
     currency = models.JSONField(default=dict)
     dep_category = models.JSONField(default=dict)
     cred_category = models.JSONField(default=dict)
+    feedback = models.JSONField(default=dict)
     # adj_category = models.JSONField(default=dict)

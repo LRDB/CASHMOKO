@@ -463,3 +463,10 @@ def profile(response):
         "main/profile.html",
         {"ls": ls, "banks": banks},
     )
+
+
+def feedback(response):
+    ls = response.user
+    person = ls.person
+    feed = [v for k, v in list(person.feedback.items())[::-1]]
+    return render(response, "main/feedback.html", {"feedback": feed})

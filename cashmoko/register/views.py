@@ -75,6 +75,8 @@ def register(response):
                 #     "Adjustments": "Adjustments",
                 # },
             }
+
+            feedback = {"0": {"title": "", "content": "", "resolved": ""}}
             user = form.save(commit=False)
             user.first_name = form.cleaned_data["firstname"]
             user.last_name = form.cleaned_data["lastname"]
@@ -88,6 +90,7 @@ def register(response):
                 verified=False,
                 dep_category=categories["deposit"],
                 cred_category=categories["credit"],
+                feedback=feedback,
                 # adj_category=categories["adjustments"],
             )
             messages.success(response, "Sign-up was successful")
