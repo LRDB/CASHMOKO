@@ -3,33 +3,31 @@
     align-items: center;
     height: 18vh;
     justify-content: center;
-    margin: 0.5rem;
     padding: 0.25rem;
-    background-color: #DE3C4B;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #FF008A;
+    color: white;
 
 }
 
 .boxes {
     width: 15vw;
+    border-color: white;
 }
 
 .big-group {
     display: flex;
     height: 70vh;
-    margin: 0.5rem 0rem;
 }
 
 .b {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .left-panel {
     width: 50%;
     height: 100%;
-    background-color: #000022;
-    margin: 0rem 0.5rem;
+    background-color: #FFFF00;
     padding: 1rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
@@ -37,27 +35,22 @@
 .right-panel {
     width: 50%;
     height: 100%;
-    margin: 0rem 0.5rem;
     padding: 1rem;
-    background-color: #E28413;
+    background-color: #FF5200;
 }
 
 .groups {
     display: flex;
     width: auto;
     height: 21vh;
-    background-color: #FBF5F3;
-    padding: 0.75rem;
+    background-color: #020109;
     margin: 0.45rem 0.5rem;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .icon {
     width: calc(30% - 4rem);
     /* Adjust the width based on the desired ratio */
     height: auto;
-    background-color: black;
-    border-radius: 50%;
     position: relative;
 }
 
@@ -65,7 +58,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    clip-path: circle(50%);
 }
 
 .text {
@@ -73,6 +65,21 @@
     /* Adjust the width based on the desired ratio */
     padding: 0% 2%;
     margin: 1rem 0rem 1rem 1rem;
+    color: white;
+}
+
+@font-face {
+    font-family: 'cubao_freeregular';
+    src: url('cubao_free_regular-webfont.woff2') format('woff2'),
+         url('cubao_free_regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.title{
+    font-family: 'cubao_freeregular', sans-serif;
+    text-transform: uppercase;
 }
 
 .quote {
@@ -94,4 +101,31 @@
 
 .totalBalances {
     font-size: clamp(1rem, 1.5vw, 1.1rem)
+}
+
+.table-wrapper {
+    max-height: 10px; /* Adjust to the desired maximum height */
+    overflow-y: scroll; /* Add vertical scrollbar if needed */
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+}
+
+th, td {
+    border: 1px solid #f2f2f2;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tbody{
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #f2f2f2;
 }
