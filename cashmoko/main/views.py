@@ -388,11 +388,39 @@ def Transactions(response):
     m = person.moneytransactions
     banks = person.bankaccounts
     last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"]
+
+    # Get filter values from GET response
+    if response.method == "POST":
+        category = response.POST.get("category")
+        transaction_type = response.POST.get("type")
+
+        # Apply filters if they are not None
+        if category:
+            last_transactions = [
+                transaction
+                for transaction in last_transactions
+                if transaction["category"] == category
+            ]
+        if transaction_type:
+            last_transactions = [
+                transaction
+                for transaction in last_transactions
+                if transaction["type"] == transaction_type
+            ]
+        response.session["last_transactions"] = last_transactions
+        return redirect("Transactions")
+
+    last_transactions = response.session.get("last_transactions", last_transactions)
+
     return render(
         response,
         "main/transactions.html",
         {
             "ls": ls,
+            "categories": list(person.dep_category.keys())
+            + list(person.cred_category.keys())
+            + ["Ipon", "Bank Transfer", "Others"],
+            "types": ["debit", "credit", "Adjustment"],
             "last_transactions": last_transactions,
         },
     )
@@ -464,6 +492,8 @@ def profile(response):
     )
 
 
+@csrf_protect
+@login_required
 def feedback(response):
     ls = response.user
     person = ls.person
