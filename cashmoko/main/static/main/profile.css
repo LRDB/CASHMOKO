@@ -13,10 +13,13 @@ body {
 
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+    background-color:#0c0c0c
 }
 
 .card .card-header {
     font-weight: 500;
+    font-family:'cubao_font', sans-serif;
+    color: #FF008A;
 }
 
 .card-header:first-child {
@@ -28,6 +31,8 @@ body {
     margin-bottom: 0;
     background-color: rgba(33, 40, 50, 0.03);
     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+    font-family:'cubao_font', sans-serif;
+    color: #FF008A;
 }
 
 .form-control,
@@ -49,13 +54,25 @@ body {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+
+.mb-3{
+    font-family:'quiapo_font', sans-serif;
+    color: #6EFF00;
+}
+
+.btn{
+    background-color: #FFFF00;
+    font-family: 'kagitingan_font', sans-serif;
+    color: #020109;
+}
+
 .nav-borders .nav-link.active {
-    color: #0061f2;
-    border-bottom-color: #0061f2;
+    color: white;
+    border-bottom-color: white;
 }
 
 .nav-borders .nav-link {
-    color: #69707a;
+    color: #020109;
     border-bottom-width: 0.125rem;
     border-bottom-style: solid;
     border-bottom-color: transparent;
@@ -100,4 +117,25 @@ body {
 
 #concern {
     resize: none;
+}
+
+
+@font-face {
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
+
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
 }

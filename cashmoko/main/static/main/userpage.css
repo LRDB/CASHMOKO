@@ -4,8 +4,9 @@
     height: 18vh;
     justify-content: center;
     padding: 0.25rem;
-    background-color: #FF008A;
-    color: white;
+    background-color: #272727;
+    color: #747474;
+    font-family: 'cubao_font';
 
 }
 
@@ -27,7 +28,7 @@
 .left-panel {
     width: 50%;
     height: 100%;
-    background-color: #FFFF00;
+    background-color: #FFE400;
     padding: 1rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
@@ -36,21 +37,23 @@
     width: 50%;
     height: 100%;
     padding: 1rem;
-    background-color: #FF5200;
+    background-color: #272727;
 }
 
 .groups {
     display: flex;
     width: auto;
     height: 21vh;
-    background-color: #020109;
+    background-color: #272727;
     margin: 0.45rem 0.5rem;
+    font-family: 'quiapo_font', sans-serif;
+    align-items: center;
 }
 
 .icon {
     width: calc(30% - 4rem);
     /* Adjust the width based on the desired ratio */
-    height: auto;
+    height: max-content;
     position: relative;
 }
 
@@ -69,16 +72,27 @@
 }
 
 @font-face {
-    font-family: 'cubao_freeregular';
-    src: url('cubao_free_regular-webfont.woff2') format('woff2'),
-         url('cubao_free_regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
 
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
 }
 
 .title{
-    font-family: 'cubao_freeregular', sans-serif;
+    font-family: 'cubao_font', sans-serif;
     text-transform: uppercase;
 }
 
@@ -89,6 +103,7 @@
 
 .t {
     height: 65%;
+    font-family: 'quiapo_font', sans-serif;
 }
 
 .conversion {
@@ -120,6 +135,7 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+    color: #FF652F;
 }
 
 tbody{
@@ -128,4 +144,9 @@ tbody{
 
 tbody tr:hover {
     background-color: #f2f2f2;
+}
+
+.scrollable-container {
+    overflow: auto; /* or overflow: scroll; */
+    max-height: 200px; /* Set a maximum height if needed */
 }
