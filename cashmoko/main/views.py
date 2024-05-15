@@ -24,6 +24,31 @@ from cashmoko import settings
 TIMEZONE = pytz.timezone("Asia/Manila")
 
 
+def show_balance(response):
+    accounts = {"Cash": 0.0, "E-Wallet": 0.0, "Bank": 0.0}
+    transaction_types = [
+        "Debit",
+        "Credit",
+        "Bank Transfer",
+        "Adjustment",
+        "Transactions",
+    ]
+
+    ls = response.user
+    person = ls.person
+    m = person.moneytransactions
+    banks = person.bankaccounts
+
+    for bank in banks:
+        if banks[bank][1] == "BANK":
+            accounts["Bank"] += banks[bank][0]
+        elif banks[bank][1] == "WALLET":
+            accounts["Cash"] += banks[bank][0]
+        elif banks[bank][1] == "E-WALLET":
+            accounts["E-Wallet"] += banks[bank][0]
+    return accounts, transaction_types
+
+
 def emailMessage(user, p, subject, message):
     email_msg = EmailMessage()
     email_msg["From"] = settings.EMAIL_HOST_USER
@@ -55,8 +80,6 @@ def home(response):
 @csrf_protect
 @login_required
 def userpage(response):
-    accounts = {"Cash": 0.0, "E-Wallet": 0.0, "Bank": 0.0}
-
     ls = response.user
     if ls.person.verified == False:
         p = ls.person
@@ -74,13 +97,7 @@ def userpage(response):
     m = person.moneytransactions
     banks = person.bankaccounts
 
-    for bank in banks:
-        if banks[bank][1] == "BANK":
-            accounts["Bank"] += banks[bank][0]
-        elif banks[bank][1] == "WALLET":
-            accounts["Cash"] += banks[bank][0]
-        elif banks[bank][1] == "E-WALLET":
-            accounts["E-Wallet"] += banks[bank][0]
+    accounts, _ = show_balance(response)
 
     person.save()
     last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"][:10]
@@ -102,28 +119,11 @@ def userpage(response):
 @csrf_protect
 @login_required
 def user_balances(response):
-    accounts = {"Cash": 0.0, "E-Wallet": 0.0, "Bank": 0.0}
-    transaction_types = [
-        "Debit",
-        "Credit",
-        "Bank Transfer",
-        "Adjustment",
-        "Transactions",
-    ]
-
     ls = response.user
     person = ls.person
     m = person.moneytransactions
     banks = person.bankaccounts
-
-    for bank in banks:
-        if banks[bank][1] == "BANK":
-            accounts["Bank"] += banks[bank][0]
-        elif banks[bank][1] == "WALLET":
-            accounts["Cash"] += banks[bank][0]
-        elif banks[bank][1] == "E-WALLET":
-            accounts["E-Wallet"] += banks[bank][0]
-
+    accounts, transaction_types = show_balance(response)
     return render(
         response,
         "main/userbalances.html",
