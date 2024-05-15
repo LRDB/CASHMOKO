@@ -21,7 +21,7 @@ Balances
         <h1 class="d-flex justify-content-center gap-3">Current Balances</h1>
         {% for type, amount in accounts.items %}
         <div class="d-flex justify-content-center gap-3">
-            <h2 class="text-center">{{type}}:</h2>
+            <h2 class="balance_type">{{type}}:</h2>
             <h3 class="text-center font-monospace">₱ {{amount}}</h3>
         </div>
         {% endfor %}

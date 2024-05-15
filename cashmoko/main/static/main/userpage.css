@@ -28,23 +28,21 @@
 .left-panel {
     width: 50%;
     height: 100%;
-    background-color: #FFE400;
+    background-color: #EFE2BA;
     padding: 1rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .right-panel {
-    width: 50%;
-    height: 100%;
+
     padding: 1rem;
-    background-color: #272727;
+    background-color: #EFE2BA;
 }
 
 .groups {
     display: flex;
     width: auto;
-    height: 21vh;
-    background-color: #272727;
+    background-color: #EFE2BA;
     margin: 0.45rem 0.5rem;
     font-family: 'quiapo_font', sans-serif;
     align-items: center;
@@ -52,16 +50,62 @@
 
 .icon {
     width: calc(30% - 4rem);
-    /* Adjust the width based on the desired ratio */
     height: max-content;
     position: relative;
 }
 
 .icon img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
+    border-radius: 50%;
 }
+
+.tint-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #D79922;
+    opacity: 100; /* Adjust the opacity as needed */
+    mix-blend-mode: color; /* Apply blend mode */
+}
+
+.image_panel_right{
+    background-color: #272727;
+    background-size: cover; 
+    background-position: center; 
+    height: 1000px; 
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.image_panel_right img{
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.image_panel_left{
+    background-color: white;
+    background-size: cover; 
+    background-position: center; 
+    height: 1000px; 
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.image_panel_left img{
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
 
 .text {
     width: calc(70% - 4rem);
@@ -119,7 +163,7 @@
 }
 
 .table-wrapper {
-    max-height: 10px; /* Adjust to the desired maximum height */
+    max-height: 100px; /* Adjust to the desired maximum height */
     overflow-y: scroll; /* Add vertical scrollbar if needed */
 }
 
@@ -135,7 +179,7 @@ th, td {
 
 th {
     background-color: #f2f2f2;
-    color: #FF652F;
+    color: #F13C20;
 }
 
 tbody{
@@ -148,5 +192,5 @@ tbody tr:hover {
 
 .scrollable-container {
     overflow: auto; /* or overflow: scroll; */
-    max-height: 200px; /* Set a maximum height if needed */
+    display: flex;
 }

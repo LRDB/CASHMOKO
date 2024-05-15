@@ -1,6 +1,6 @@
 body {
-    background-color: #f2f6fc;
-    color: #69707a;
+    background-color: #EFE2BA;
+    color: #F13C20;
 }
 
 .img-account-profile {
@@ -19,7 +19,7 @@ body {
 .card .card-header {
     font-weight: 500;
     font-family:'cubao_font', sans-serif;
-    color: #FF008A;
+    color: #4056A1;
 }
 
 .card-header:first-child {
@@ -32,7 +32,7 @@ body {
     background-color: rgba(33, 40, 50, 0.03);
     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
     font-family:'cubao_font', sans-serif;
-    color: #FF008A;
+    color: #4056A1;
 }
 
 .form-control,
@@ -43,8 +43,8 @@ body {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1;
-    color: #69707a;
-    background-color: #fff;
+    color: #EFE2BA;
+    background-color: #EFE2BA;
     background-clip: padding-box;
     border: 1px solid #c5ccd6;
     -webkit-appearance: none;
@@ -57,11 +57,11 @@ body {
 
 .mb-3{
     font-family:'quiapo_font', sans-serif;
-    color: #6EFF00;
+    color: #D79922;
 }
 
 .btn{
-    background-color: #FFFF00;
+    background-color: #F13C20;
     font-family: 'kagitingan_font', sans-serif;
     color: #020109;
 }

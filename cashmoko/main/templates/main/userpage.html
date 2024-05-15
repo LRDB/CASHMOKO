@@ -37,10 +37,11 @@
                     <div class="icon">
                         <!-- Icon -->
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsfegQZxyX-9Ip9uk0godyMrugx9YgDvgsGm8JbXL3BA&s" alt="alternatetext">
+                        <div class="tint-overlay"></div>
                     </div>
                     <div class="text">
                         <!-- Text -->
-                        <h1 class="title" style="color: #6EFF00">Profile</h1>
+                        <h1 class="title" style="color: #4056A1">Profile</h1>
                         <p class="quote">"{{q}}"</p>
                     </div>
                 </div>
@@ -51,10 +52,11 @@
                     <div class="icon">
                         <!-- Icon -->
                         <img src="https://static.vecteezy.com/system/resources/thumbnails/002/361/001/small/wallet-icon-free-vector.jpg" alt="alternatetext">
+                        <div class="tint-overlay"></div>
                     </div>
                     <div class="text">
                         <!-- Text -->
-                        <h1 class="title" style="color:#FF652F">Bank Accounts</h1>
+                        <h1 class="title" style="color:#D79922">Bank Accounts</h1>
                         {% for type, amount in accounts.items %}
                             <span class="totalBalances">{{type}}: ₱ {{amount}}     </span>
                         {% endfor %}
@@ -67,22 +69,20 @@
                     <div class="icon">
                         <!-- Icon -->
                         <img src="https://www.shutterstock.com/image-vector/piggy-bank-icon-vector-black-260nw-1505613449.jpg" alt="alternatetext">
+                        <div class="tint-overlay"></div>
                     </div>
                     <div class="text">
                         <!-- Text -->
-                        <h1 class="title" style="color:#FFE400">Ipon Challenge</h1>
+                        <h1 class="title" style="color:#F13C20">Ipon Challenge</h1>
                         <p class="quote">Total: ₱ {{ls.person.bankaccounts.IPON.0}}</p>
                     </div>
                 </div>
             </a>
         </section>
 
-    </div>
-
-    <div class="big-group">
         <section class="right-panel">
             
-            <h1 class='title' style="color:#14A76C">Transaction History</h1>
+            <h1 class='title' style="color:#4056A1">Transaction History</h1>
             <!-- Table -->
             <div class="t">
                 <table id = "transaction_history" class="table-wrapper">
@@ -124,7 +124,7 @@
             </div>
             
             <div class="conversion">
-                <h1 class='title' style="color:#FFE400">Money Conversion API</h1>
+                <h1 class='title' style="color:#C5CBE3">Money Conversion API</h1>
                 {% for c, v in currencies.items %}
                     <p class="currencies" style="color: white;">PHP to {{c}} : {{v}}</p>
                 {% endfor %}
