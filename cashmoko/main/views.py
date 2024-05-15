@@ -187,6 +187,7 @@ def Debit(response):
     ls = response.user
     person = ls.person
 
+    accounts, _ = show_balance(response)
     message = None
 
     if response.method == "POST":
@@ -221,7 +222,7 @@ def Debit(response):
     else:
         form = CreateTransactionEntry(ls, "dep_category")
     return render(
-        response, "main/debit.html", {"form": form, "ls": ls, "message": message}
+        response, "main/debit.html", {"form": form, "ls": ls, "message": message, "accounts": accounts}
     )
 
 
