@@ -1,0 +1,29 @@
+body {
+    background-color: #EFE2BA;
+    color: #272727;
+}
+
+h1{
+    color: #4056A1;
+    font-family: 'cubao_font', sans-serif;
+}
+
+@font-face {
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
+
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
+}
