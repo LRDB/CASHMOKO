@@ -61,9 +61,10 @@ body {
 }
 
 .btn{
-    background-color: #F13C20;
+    background-color: #D79922;
     font-family: 'kagitingan_font', sans-serif;
     color: #020109;
+    border-color:#747474;
 }
 
 .nav-borders .nav-link.active {

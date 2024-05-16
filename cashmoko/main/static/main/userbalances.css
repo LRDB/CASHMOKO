@@ -11,6 +11,12 @@ html, body {
 h1{
     color: #D79922;
     font-family: 'cubao_font', sans-serif;
+
+}
+
+h3{
+    color: #D79922;
+    font-family: 'baybayin_font', sans-serif;
 }
 
 .bank-buttons {
@@ -32,6 +38,23 @@ a {
 
 .page{
     align-items: justify;
+}
+
+.button{
+    color: #272727;
+    background-color: #C8BA8B;
+    font-size: 40%;
+    font-family: 'cubao_font', sans-serif;
+    border: 3px solid #272727;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+}
+
+.button:hover{
+    background-color: #D79922;
+    color: white;
+    transform: scale(1.05);
 }
 
 @font-face {

@@ -4,20 +4,39 @@
 Debit
 {% endblock %}
 
+{% block stylesheet %}
+"static/main/bank_account_actions.css"
+{% endblock %}
+
 {% block content %}
 
-<h1>Debit</h1>
+<div class="flex-container">
 
-<form action = "Debit" method = "post">
-	{% csrf_token %}
-	{{ form }}
-	<input type="submit" value="Submit">
+	<div class = "centered_content">
 
-	{% if messages %}
-		{% for message in messages %}
-			<h4>{{ message }}</h4>
-		{% endfor %}
-	{% endif %}
-</form>
+		<div class="big-group-title">
+			<h1>Debit</h1>
+			<h3>Debit</h3>
+		</div>
+
+		<div class="big-group-contents">
+			<form action = "Debit" method = "post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+			
+				{% if messages %}
+					{% for message in messages %}
+						<h4>{{ message }}</h4>
+					{% endfor %}
+				{% endif %}
+			</form>
+
+		</div>
+
+	</div>	
+
+</div>
+
 
 {% endblock %}

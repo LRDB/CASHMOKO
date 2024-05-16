@@ -4,18 +4,36 @@
 credit
 {% endblock %}
 
+{% block stylesheet %}
+"static/main/iponchallenge.css"
+{% endblock %}
+
 {% block content %}
 
-<h1>Credit</h1>
+<div class="flex-container">
 
-<form action = "Credit" method = "post">
-	{% csrf_token %}
-	{{ form }}
-	<input type="submit" value="Submit">
-	{% if messages %}
-		{% for message in messages %}
-			<h4>{{ message }}</h4>
-		{% endfor %}
-	{% endif %}
-</form>
+	<div class = "centered_content">
+
+		<div class="big-group-title">
+			<h1>Credit</h1>
+			<h3>Credit</h3>
+		</div>
+
+		<div class="big-group-contents">
+			<form action = "Credit" method = "post">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+				{% if messages %}
+					{% for message in messages %}
+						<h4>{{ message }}</h4>
+					{% endfor %}
+				{% endif %}
+			</form>
+
+		</div>
+
+	</div>
+
+</div>
 {% endblock %}

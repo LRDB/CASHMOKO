@@ -11,12 +11,13 @@ Balances
 {% block content %}
 <section id="page">
 
-    <h1>Bank Accounts</h1>
+    <h1 style="text-align: center;">Bank Accounts</h1>
+    <h3 style="text-align: center;">Bank Accounts</h3>
 
     <div class="d-flex justify-content-center gap-3">
         <!-- Buttons -->
         {% for type in transaction_types %}
-        <a href="{% url type %}"><button type="button" class="btn btn-outline-success bank-buttons">{{type}}</button></a>
+        <a href="{% url type %}"><button type="button">{{type}}</button></a>
         {% endfor %}
     </div>
 

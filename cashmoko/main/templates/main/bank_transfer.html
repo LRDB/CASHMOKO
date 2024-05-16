@@ -4,18 +4,31 @@
 Bank Transfer
 {% endblock %}
 
+{% block stylesheet %}
+"static/main/bank_account_actions.css"
+{% endblock %}
+
 {% block content %}
 
-	<h1>Bank Transfer</h1>
+<div class="flex-container">
+	<div class = "centered_content">
+		<div class="big-group-title">
+			<h1>Bank Transfer</h1>
+			<h3>Bank Transfer</h3>
+		</div>
 
-	<form action = "Bank Transfer" method = "POST">
-		{% csrf_token %}
-		{{ form }}
-		<input type="submit" value="Submit">
-		{% if messages %}
-			{% for message in messages %}
-				<h4>{{ message }}</h4>
-			{% endfor %}
-		{% endif %}
-	</form>
+		<div class="big-group-contents">
+			<form action = "Bank Transfer" method = "POST">
+				{% csrf_token %}
+				{{ form }}
+				<input type="submit" value="Submit">
+				{% if messages %}
+					{% for message in messages %}
+						<h4>{{ message }}</h4>
+					{% endfor %}
+				{% endif %}
+			</form>
+		</div>
+	</div>
+</div>
 {% endblock %}
