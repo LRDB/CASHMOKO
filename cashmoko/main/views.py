@@ -54,12 +54,18 @@ def show_balance(response):
     return accounts, transaction_types
 
 
-def emailMessage(user, p, subject, message):
+def emailMessage(user, p, subject, message, file = None):
     email_msg = EmailMessage()
     email_msg["From"] = settings.EMAIL_HOST_USER
     email_msg["To"] = user.email
     email_msg["Subject"] = subject
     email_msg.set_content(message)
+    
+    if (file == 'summary.pdf'):
+        with open('summary.pdf', 'rb') as f:
+            file_data = f.read()
+            
+        email_msg.add_attachment(file_data, maintype='application',subtype='pdf',filename='summary.pdf')
 
     with smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT) as smtp:
         smtp.ehlo()
