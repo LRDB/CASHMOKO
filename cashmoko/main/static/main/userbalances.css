@@ -42,7 +42,7 @@ a {
 
 .button{
     color: #272727;
-    background-color: #C8BA8B;
+    background-color: black;
     font-size: 40%;
     font-family: 'cubao_font', sans-serif;
     border: 3px solid #272727;
@@ -51,10 +51,16 @@ a {
 
 }
 
-.button:hover{
-    background-color: #D79922;
-    color: white;
-    transform: scale(1.05);
+.btn.btn-outline-success {
+    border-color: #272727; 
+    color: #272727;
+    background-color: #EFE2BA;
+}
+
+/* Change the background color and text color on hover */
+.btn.btn-outline-success:hover {
+    background-color: #D79922; /* Green background color on hover */
+    color: white; /* White text color on hover */
 }
 
 @font-face {

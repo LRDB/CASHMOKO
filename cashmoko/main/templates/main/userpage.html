@@ -110,10 +110,8 @@
                     var table = document.getElementById("transaction_history");
                     var maxRows = 9; // Change this to the desired number of rows
             
-                    // Get all rows in the table body
                     var rows = table.getElementsByTagName("tr");
                     
-                    // Hide rows exceeding the maximum limit
                     for (var i = maxRows; i < rows.length; i++) {
                         rows[i].style.display = "none";
                     }
@@ -126,7 +124,7 @@
             <div class="conversion">
                 <h1 class='title' style="color:#C5CBE3">Money Conversion API</h1>
                 {% for c, v in currencies.items %}
-                    <p class="currencies" style="color: white;">PHP to {{c}} : {{v}}</p>
+                    <p class="currencies">PHP to {{c}} : {{v}}</p>
                 {% endfor %}
             </div>
             

@@ -31,6 +31,7 @@
     background-color: #EFE2BA;
     padding: 1rem;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    align-items: center;
 }
 
 .right-panel {
@@ -47,11 +48,12 @@
     margin: 0.45rem 0.5rem;
     font-family: 'quiapo_font', sans-serif;
     align-items: center;
+    border: 3px solid #747474;
+    padding: 15px;
 }
 
 .icon {
-    width: 50%;
-    height: 50%;
+    width: 15%;
     position: relative;
 }
 
@@ -82,13 +84,14 @@
 }
 
 .image_panel_left{
-    background-color: white;
+    background-color: #272727;
     background-size: cover; 
     background-position: center; 
     height: 1000px; 
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
+
 }
 
 .image_panel_left img{
@@ -100,11 +103,9 @@
 
 
 .text {
-    width: calc(70% - 4rem);
-    /* Adjust the width based on the desired ratio */
     padding: 0% 2%;
     margin: 1rem 0rem 1rem 1rem;
-    color: white;
+    color: #272727;
 }
 
 @font-face {
@@ -147,15 +148,20 @@
 }
 
 .currencies {
-    color: white;
+    color: #272727;
+    line-height: 0.5;
 }
 
+
+
 .totalBalances {
-    font-size: clamp(1rem, 1.5vw, 1.1rem)
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    padding: 0% 2%;
+    color: #272727;
 }
 
 .table-wrapper {
-    max-height: 100px; /* Adjust to the desired maximum height */
+    max-height: 75px; /* Adjust to the desired maximum height */
     overflow-y: scroll; /* Add vertical scrollbar if needed */
 }
 
