@@ -21,6 +21,11 @@ import smtplib
 from email.message import EmailMessage
 from cashmoko import settings
 
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+import pandas as pd
+from pandas.plotting import table
+
 TIMEZONE = pytz.timezone("Asia/Manila")
 
 
@@ -524,3 +529,100 @@ def feedback(response):
                 emailMessage(ls, person, "CASHMOKO: Feedback", messageToUser)
             return redirect("feedback")
     return render(response, "main/feedback.html", {"feedback": feed})
+
+@csrf_protect
+@login_required
+def emailsummary(response):
+    ls = response.user
+    person = ls.person
+    m = person.moneytransactions
+    
+    plt.figure(0)
+    dep_labels = list(person.dep_category.keys())
+    dep_amounts = [0] * len(dep_labels)
+    
+    for i in range(0, len(dep_labels)):
+        for k, v in m.items():
+            if (v["category"] == dep_labels[i]):
+                dep_amounts[i] = dep_amounts[i] + v["amount"]
+
+    formatted_dep_labels = []
+    formatted_dep_amounts = []
+    
+    for i in range(0, len(dep_labels)):
+        if (dep_amounts[i] != 0):
+            formatted_dep_labels.append(dep_labels[i])
+            formatted_dep_amounts.append(dep_amounts[i])
+    
+    plt.pie(formatted_dep_amounts, labels=formatted_dep_labels)
+    
+    cred_labels = list(person.cred_category.keys())
+    cred_amounts = [0] * len(cred_labels)
+    
+    plt.figure(1)
+    for i in range(0, len(cred_labels)):
+        for k, v in m.items():
+            if (v["category"] == cred_labels[i]):
+                cred_amounts[i] = cred_amounts[i] + v["amount"]
+    
+    formatted_cred_labels = []
+    formatted_cred_amounts = []
+    
+    for i in range(0, len(cred_labels)):
+        if (cred_amounts[i] != 0):
+            formatted_cred_labels.append(cred_labels[i])
+            formatted_cred_amounts.append(cred_amounts[i])
+
+    plt.pie(formatted_cred_amounts, labels=formatted_cred_labels)
+    
+    #Ugh
+    accounts = {"Cash": 0.0, "E-Wallet": 0.0, "Bank": 0.0}
+    banks = person.bankaccounts
+
+    for bank in banks:
+        if banks[bank][1] == "BANK":
+            accounts["Bank"] += banks[bank][0]
+        elif banks[bank][1] == "WALLET":
+            accounts["Cash"] += banks[bank][0]
+        elif banks[bank][1] == "E-WALLET":
+            accounts["E-Wallet"] += banks[bank][0]
+    
+        
+    plt.figure(2)
+    #UGH!!!
+    last_transactions = [v for k, v in list(m.items())[::-1] if k != "0"]
+    
+    some_transactions = []
+    
+    for i in range(0,5):
+        some_transactions.append(last_transactions[i])
+
+    df = pd.json_normalize(some_transactions)
+    
+    df = df.drop("startBank",axis=1)
+    df = df.drop("endBank",axis=1)
+    df = df.drop("done",axis=1)
+    
+    ax = plt.subplot(111, frame_on=False)
+    ax.xaxis.set_visible(False)
+    ax.yaxis.set_visible(False)
+    
+    table(ax,df,loc='center')
+    
+    save_multi_image("summary.pdf")
+
+    messageToUser = f'This is your summary for: {datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")}\nYour Account Balances:\nBANK: ₱{accounts["Bank"]}\nWALLET: ₱{accounts["Cash"]}\nE-WALLET: ₱{accounts["E-Wallet"]}\n'
+    emailMessage(ls, person, "CASHMOKO: Summary", messageToUser, file="summary.pdf")
+    
+    return render(
+        response,
+        "main/emailsummary.html",
+    )
+   
+def save_multi_image(filename):
+    pp = PdfPages(filename)
+    fig_nums = plt.get_fignums()
+    figs = [plt.figure(n) for n in fig_nums]
+    for fig in figs:
+        fig.savefig(pp, format='pdf')
+    pp.close()
