@@ -1,6 +1,22 @@
 #page {
     height: 100vh;
     vertical-align: center;
+    background-color: #EFE2BA;
+}
+
+html, body {
+    background-color: #EFE2BA;
+}
+
+h1{
+    color: #D79922;
+    font-family: 'cubao_font', sans-serif;
+
+}
+
+h3{
+    color: #D79922;
+    font-family: 'baybayin_font', sans-serif;
 }
 
 .bank-buttons {
@@ -12,9 +28,57 @@
     height: 15vh;
     justify-content: center;
     margin: 4em 0em 3em 1em;
+    color: blue;
 }
 
 a {
     text-decoration: none;
     color: black;
+}
+
+.page{
+    align-items: justify;
+}
+
+.button{
+    color: #272727;
+    background-color: black;
+    font-size: 40%;
+    font-family: 'cubao_font', sans-serif;
+    border: 3px solid #272727;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+}
+
+.btn.btn-outline-success {
+    border-color: #272727; 
+    color: #272727;
+    background-color: #EFE2BA;
+}
+
+/* Change the background color and text color on hover */
+.btn.btn-outline-success:hover {
+    background-color: #D79922; /* Green background color on hover */
+    color: white; /* White text color on hover */
+}
+
+@font-face {
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
+
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
 }

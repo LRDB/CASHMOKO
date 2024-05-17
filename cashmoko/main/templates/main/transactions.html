@@ -10,7 +10,32 @@ Transactions
 
 {% block content %}
 
-    <h1 class="d-flex justify-content-center gap-3">Transaction History</h1>
+    <h1 style="text-align: center;">Transaction History</h1>
+        <!-- Filter form -->
+    <div class="d-flex justify-content-center">
+        <form method="post" class="text-center" style="font-size: 1.25em;">
+        {% csrf_token %}    
+            <label for="type">Transaction Type:</label>
+            <select id="type" name="type" style="margin-right: 0.5rem;">
+                <option value="">All</option>
+                {% for type in types %}
+                    <option value="{{ type }}">{{ type }}</option>
+                {% endfor %}
+            </select>
+            <label for="category">Category:</label>
+            <select id="category" name="category" style="margin-right: 0.5rem;">
+                <option value="">All</option>
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+                <!-- etc. -->
+            </select>
+            <input type="submit" value="Filter" class="btn btn-outline-success" style="font-size: 1em; margin:1.05rem">
+            <input type="submit" value="Send Email" name="send_email" class="btn btn-outline-success" style="font-size: 1em; margin:1.05rem">
+        </form>
+    </div>
+    </div>
+    </div>
     <div class="t">
         <table class="table table-striped">
             <tr>

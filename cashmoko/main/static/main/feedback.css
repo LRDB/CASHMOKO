@@ -1,0 +1,35 @@
+body {
+    background-color: #EFE2BA;
+    color: #272727;
+}
+
+.card .card-header {
+    font-weight: 500;
+    font-family:'cubao_font', sans-serif;
+    color: #4056A1;
+}
+
+.mb-3{
+    font-family: 'quiapo_font', sans-serif;
+    color: #4056A1;
+}
+
+@font-face {
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
+
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
+}

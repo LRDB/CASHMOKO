@@ -9,11 +9,16 @@ Balances
 {% endblock %}
 
 {% block content %}
+
 <section id="page">
+
+    <h1 style="text-align: center;">Bank Accounts</h1>
+    <h3 style="text-align: center;">Bank Accounts</h3>
+
     <div class="d-flex justify-content-center gap-3">
         <!-- Buttons -->
         {% for type in transaction_types %}
-        <a href="{% url type %}"><button type="button" class="btn btn-outline-success bank-buttons">{{type}}</button></a>
+        <a href="{% url type %}"><button type="button" class="btn btn-outline-success">{{type}}</button></a>
         {% endfor %}
     </div>
 
@@ -21,7 +26,7 @@ Balances
         <h1 class="d-flex justify-content-center gap-3">Current Balances</h1>
         {% for type, amount in accounts.items %}
         <div class="d-flex justify-content-center gap-3">
-            <h2 class="text-center">{{type}}:</h2>
+            <h2 class="balance_type">{{type}}:</h2>
             <h3 class="text-center font-monospace">₱ {{amount}}</h3>
         </div>
         {% endfor %}

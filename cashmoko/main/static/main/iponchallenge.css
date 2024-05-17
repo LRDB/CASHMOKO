@@ -1,0 +1,89 @@
+html, body {
+    height: 100%; /* Ensure the body and html are full height */
+    margin: 0;
+    background-color: #272727;
+}
+
+h1{
+    color: #F13C20;
+    font-family: 'cubao_font', sans-serif;
+}
+
+h3{
+    color: #F13C20;
+    font-family:'baybayin_font', sans-serif;
+}
+
+h4{
+    color:#272727;
+    font-family: 'quiapo_font', sans-serif;
+}
+
+.centered_content {
+    width: 50%; /* Set a width for the content */
+    margin: 0 auto; /* Center horizontally */
+}
+
+.big-group-title {
+    height: 70vh;
+    background-color: #EFE2BA;
+    width: 50%; /* Set a width for the content */
+    height: 100%;
+    margin: 0 auto; /* Center horizontally */
+    padding: 10%;
+    border: 5px solid #F13C20; /* Adjust the width, style, and color */
+}
+
+.big-group-contents {
+    display: flex;
+    height: 70vh;
+    background-color: #EFE2BA;
+    width: 50%; /* Set a width for the content */
+    height: 100%;
+    margin: 0 auto; /* Center horizontally */
+    padding: 10%;
+    border: 5px solid #F13C20; /* Adjust the width, style, and color */
+    font-family:'quiapo_font', sans-serif;
+}
+
+
+.flex-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Full viewport height */
+}
+
+.left-panel {
+    width: 50%;
+    height: 100%;
+    background-color: #EFE2BA;
+    padding: 1rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.right-panel {
+
+    padding: 1rem;
+    background-color: white;
+}
+
+@font-face {
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
+
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
+}

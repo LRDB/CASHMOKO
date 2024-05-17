@@ -1,3 +1,9 @@
+html, body {
+    height: 100%; /* Ensure the body and html are full height */
+    margin: 0;
+    background-color: #EFE2BA;
+}
+
 .t {
     display: flex;
     align-items: center;
@@ -7,10 +13,45 @@
 }
 
 h1 {
+    font-family: 'cubao_font',sans-serif;
     font-size: 2rem;
     margin: 1rem;
+    color: #D79922;
 }
 
 td {
     font-size: 1.25rem;
+}
+
+th, td {
+    border: 1px solid #f2f2f2;
+    padding: 8px;
+}
+
+tbody{
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+@font-face {
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
+
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
 }

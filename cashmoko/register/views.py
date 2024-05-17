@@ -9,6 +9,9 @@ import pytz
 
 TIMEZONE = pytz.timezone("Asia/Manila")
 INITIAL_BALANCE = round(0.00, 2)
+WALLET = "WALLET"
+EWALLET = "E-WALLET"
+BANK = "BANK"
 
 
 # Create your views here.
@@ -32,13 +35,13 @@ def register(response):
             }
 
             bankaccounts = {
-                "BDO": INITIAL_BALANCE,
-                "BPI": INITIAL_BALANCE,
-                "MAYA": INITIAL_BALANCE,
-                "GCASH": INITIAL_BALANCE,
-                "WALLET": INITIAL_BALANCE,
-                "IPON": INITIAL_BALANCE,
-                "NONE": INITIAL_BALANCE,
+                "BDO": [INITIAL_BALANCE, BANK],
+                "BPI": [INITIAL_BALANCE, BANK],
+                "MAYA": [INITIAL_BALANCE, EWALLET],
+                "GCASH": [INITIAL_BALANCE, EWALLET],
+                "WALLET": [INITIAL_BALANCE, WALLET],
+                "IPON": [INITIAL_BALANCE, None],
+                "NONE": [INITIAL_BALANCE, None],
             }
 
             banks = {
@@ -72,6 +75,8 @@ def register(response):
                 #     "Adjustments": "Adjustments",
                 # },
             }
+
+            feedback = {"0": {"title": "", "content": "", "resolved": ""}}
             user = form.save(commit=False)
             user.first_name = form.cleaned_data["firstname"]
             user.last_name = form.cleaned_data["lastname"]
@@ -85,6 +90,7 @@ def register(response):
                 verified=False,
                 dep_category=categories["deposit"],
                 cred_category=categories["credit"],
+                feedback=feedback,
                 # adj_category=categories["adjustments"],
             )
             messages.success(response, "Sign-up was successful")

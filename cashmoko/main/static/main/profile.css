@@ -1,6 +1,6 @@
 body {
-    background-color: #f2f6fc;
-    color: #69707a;
+    background-color: #EFE2BA;
+    color: #F13C20;
 }
 
 .img-account-profile {
@@ -13,10 +13,13 @@ body {
 
 .card {
     box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+    background-color:#EFE2BA;
 }
 
 .card .card-header {
     font-weight: 500;
+    font-family:'cubao_font', sans-serif;
+    color: #4056A1;
 }
 
 .card-header:first-child {
@@ -28,6 +31,8 @@ body {
     margin-bottom: 0;
     background-color: rgba(33, 40, 50, 0.03);
     border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+    font-family:'cubao_font', sans-serif;
+    color: #4056A1;
 }
 
 .form-control,
@@ -38,8 +43,8 @@ body {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1;
-    color: #69707a;
-    background-color: #fff;
+    color: #EFE2BA;
+    background-color: white;
     background-clip: padding-box;
     border: 1px solid #c5ccd6;
     -webkit-appearance: none;
@@ -49,13 +54,26 @@ body {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+
+.mb-3{
+    font-family:'cubao_font', sans-serif;
+    color: #4056A1;
+}
+
+.btn{
+    background-color: #4056A1;
+    font-family: 'kagitingan_font', sans-serif;
+    color: #020109;
+    border-color:#EFE2BA;
+}
+
 .nav-borders .nav-link.active {
-    color: #0061f2;
-    border-bottom-color: #0061f2;
+    color: white;
+    border-bottom-color: white;
 }
 
 .nav-borders .nav-link {
-    color: #69707a;
+    color: #020109;
     border-bottom-width: 0.125rem;
     border-bottom-style: solid;
     border-bottom-color: transparent;
@@ -96,4 +114,29 @@ body {
 
 .buttons {
     padding: 5% 0 0 0;
+}
+
+#concern {
+    resize: none;
+}
+
+
+@font-face {
+    font-family: 'cubao_font';
+    src: url('cubao_font.ttf');
+}
+
+@font-face {
+    font-family: 'quiapo_font';
+    src: url('quiapo_font.ttf');
+}
+
+@font-face {
+    font-family: 'kagitingan_font';
+    src: url('kagitingan_font.ttf');
+}
+
+@font-face {
+    font-family: 'baybayin_font';
+    src: url('baybayin_font.ttf');
 }

@@ -18,12 +18,14 @@ Profile
     <div class="container-xll px-5 mt-3">
         <div class="row">
             <div class="col-xl-5">
+
                 <!-- Account details card-->
                 <div class="card mb-4 full-height">
                     <div class="card-header"><h1>User Profile</h1></div>
                     <div class="card-body">
                         <form method="POST">
                             {% csrf_token %}
+                            
                             <!-- Form Group (username)-->
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputUsername">Username</label>
@@ -74,7 +76,7 @@ Profile
                 <div class="card mb-4 full-height">
                     <div class="card-header"><h1>Custom Categories</h1></div>
                     <div class="card-body">
-                        <div class="mb-3" style="height: 50%;">
+                        <div class="mb-3" style="height: 12rem;">
                             <h2>Deposit Categories</h2>
                             <label for="">Add or Remove a category:</label>
                             <input type="text" name="dep_cat" id="dep_cat" value="">
@@ -88,12 +90,11 @@ Profile
                             </div>
                         </div>
                         <hr class="mt-0 mb-4">
-                        <div class="mb-3" style="height: 50%;">
+                        <div class="mb-3" style="height: 15rem;">
                             <h2>Credit Categories</h2>
                             <label for="">Add or Remove a category:</label>
                             <input type="text" name="cred_cat" id="cred_cat" value="">
                             <a href="{% url 'profile' %}"><button class="btn btn-primary" type="submit">Update Category</button></a>
-                            </form>
                             <div class="row flex-container">
                                 {% for cat in ls.person.cred_category %}
                                     <div class="flex-item">
@@ -102,6 +103,27 @@ Profile
                                 {% endfor %}
                             </div>
                         </div>
+                        <hr class="mt-0 mb-4">
+                        <div class="mb-3" style="height: 10rem;">
+                            <h2>Bank Types</h2>
+                            <label for="">Add or Remove a Bank:</label>
+                            <input type="text" name="bank" id="bank" value="">
+                            <select name="bank_type" id="bank_type">
+                                <option value="WALLET">WALLET</option>
+                                <option value="EWALLET">E-WALLET</option>
+                                <option value="BANK">BANK</option>
+                                <option value="OTHERS">OTHERS</option>
+                            </select>
+                            <a href="{% url 'profile' %}"><button class="btn btn-primary" type="submit">Update Category</button></a>
+                            <div class="row flex-container">
+                                {% for cat in ls.person.banks %}
+                                    <div class="flex-item">
+                                        <h5>{{ cat }}</h5>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                                               </form>
                     </div>
                 </div>
             </div>
