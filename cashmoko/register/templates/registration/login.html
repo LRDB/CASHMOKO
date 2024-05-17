@@ -5,6 +5,10 @@ Login Page
 {% endblock %}
 {% load crispy_forms_tags %}
 
+{% block stylesheet %}
+"cashmoko\register\templates\registration\login.css"
+{% endblock %}
+
 {% block content %}
 <div style="display: flex; justify-content: center; align-items: center; min-height:100vh; overflow:hidden;">
 <form method="post" action="/login/">

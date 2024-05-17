@@ -12,10 +12,26 @@ Adjustment
 
 <div class="flex-container">
 	<div class = "centered_content">
+
+		<div class="big-group-balances">
+	
+			<div class="d-flex justify-content-center gap-3">
+				{% for bank, amount in ls.person.bankaccounts.items %}
+				{% if bank != "NONE" %}
+				<div class="border border-dark border-4 p-3 boxes">
+					<h2 class="text-center">{{bank}}</h2>
+					<h3 class="text-center font-monospace">₱ {{amount.0}}</h3>
+				</div>
+				{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+
 		<div class="big-group-title">
 			<h1>Adjustment</h1>
 			<h3>Adjustment</h3>
 		</div>
+
 		<div class="big-group-contents">
 			<form action = "Adjustment" method = "POST">
 				{% csrf_token %}

@@ -1,7 +1,7 @@
 html, body {
     height: 100%; /* Ensure the body and html are full height */
     margin: 0;
-    background-color: #272727;
+    background-color: #C8BA8B;
 }
 
 h1{
@@ -23,6 +23,10 @@ h4{
 .centered_content {
     width: 50%; /* Set a width for the content */
     margin: 0 auto; /* Center horizontally */
+}
+
+.balances{
+    color: #D79922;
 }
 
 .big-group-title {
@@ -47,6 +51,17 @@ h4{
     font-family:'quiapo_font', sans-serif;
 }
 
+.big-group-balances{
+    display: flex;
+    height: 70vh;
+    background-color: #EFE2BA;
+    width: 50%; /* Set a width for the content */
+    height: 100%;
+    margin: 0 auto; /* Center horizontally */
+    padding: 10%;
+    border: 5px solid #D79922; /* Adjust the width, style, and color */
+    font-family:'quiapo_font', sans-serif;
+}
 
 .flex-container {
     display: flex;
