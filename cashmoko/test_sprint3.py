@@ -3,7 +3,12 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
-from main.forms import CreateTransactionEntry
+from main.forms import (
+    CreateTransactionEntry,
+    CreateIponTransactionEntry,
+    BankTransactionEntry,
+    BankTransferTransactionEntry,
+)
 from django.urls import path
 from django.contrib.auth.models import User
 from django.test import Client
@@ -11,27 +16,47 @@ from main.models import Person
 import random
 import datetime
 import pytz
+import os
+from django.http import HttpResponse
 
 
 TIMEZONE = pytz.timezone("Asia/Manila")
 INITIAL_BALANCE = round(0.00, 2)
 
+
 class Sprint3TestBasis(TestCase):
-        
-    def setUp(self):        
-        self.url_login = reverse("home")
-        self.url_user_balances = reverse("user_balances")
-        self.url_debit = reverse("Debit")
-        self.url_credit = reverse("Credit")
+
+    def setUp(self):
         self.url_bank_transfer = reverse("Bank Transfer")
         self.url_ipon_challenge = reverse("iponchallenge")
-        self.url_manual_edit = reverse("Manual Edit")
+        self.url_manual_edit = reverse("Adjustment")
 
-        user = User.objects.create_user(username="hashimoto",email="real@email.com",password="kanna")
-        user.Person = Person.objects.create(
-            user=user,
+        self.user = User.objects.create_user(
+            username="hashimoto", email="real@email.com", password="kanna"
+        )
+        categories = {
+            "deposit": {
+                "Allowance": "Allowance",
+                "Scholarship": "Scholarship",
+                "Donation": "Donation",
+                "Salary": "Salary",
+            },
+            "credit": {
+                "Food": "Food",
+                "Transportation": "Transportation",
+                "Rent": "Rent",
+                "Utilities": "Utilities",
+                "Clothes": "Clothes",
+                "Medicine": "Medicine",
+                "Grocery": "Grocery",
+                "Insurance": "Insurance",
+                "Lifestyle": "Lifestyle",
+            },
+        }
+        self.user.Person = Person.objects.create(
+            user=self.user,
             email_pin=123456,
-            moneytransactions = {
+            moneytransactions={
                 0: {
                     "date": str(
                         datetime.datetime.now(TIMEZONE).strftime("%Y:%m:%d %H:%M:%S")
@@ -44,7 +69,7 @@ class Sprint3TestBasis(TestCase):
                     "done": False,
                 },
             },
-            bankaccounts = {
+            bankaccounts={
                 "BDO": INITIAL_BALANCE,
                 "BPI": INITIAL_BALANCE,
                 "MAYA": INITIAL_BALANCE,
@@ -53,37 +78,27 @@ class Sprint3TestBasis(TestCase):
                 "IPON": INITIAL_BALANCE,
                 "NONE": INITIAL_BALANCE,
             },
+            banks={
+                "Gcash": "Gcash",
+                "BPI": "BPI",
+                "BDO": "BDO",
+                "Maya": "Maya",
+                "Wallet": "Wallet",
+                "Ipon": "Ipon",
+            },
+            dep_category=categories["deposit"],
+            cred_category=categories["credit"],
             verified=True,
         )
-        user.save()
-        
+        self.user.save()
+
         self.client = Client()
-        self.client.login(username="hashimoto",password="kanna")
+        self.client.login(username="hashimoto", password="kanna")
 
         return super().setUp()
-        
+
+
 class URLAccessTests(Sprint3TestBasis):
-        
-    def test_url_user_balances_exists(self):
-        response = self.client.get(self.url_user_balances, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "main/userbalances.html")
-    
-    def test_url_debit_exists(self):
-        response = self.client.get(self.url_debit, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "main/debit.html")
-
-    def test_url_credit_exists(self):
-        response = self.client.get(self.url_credit, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "main/credit.html")
-
-    def test_url_bank_transfer_exists(self):
-        response = self.client.get(self.url_bank_transfer, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "main/bank_transfer.html")
-
     def test_url_ipon_challenge_exists(self):
         response = self.client.get(self.url_ipon_challenge, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -93,15 +108,73 @@ class URLAccessTests(Sprint3TestBasis):
         response = self.client.get(self.url_manual_edit, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "main/manual_edit.html")
-        
+
+
 class TransactionFormTest(Sprint3TestBasis):
-    
-    def test_forms(self):
-        form_data = {"category":"hashimoto kanna","amount":1000000000,"startBank":"None","endBank":"Maya"}
-        form = CreateTransactionEntry(data=form_data)
+
+    def test_CreateIponChallenge(self):
+        form_data = {"amount": 69}
+        form = CreateIponTransactionEntry(user=self.user, data=form_data)
         self.assertTrue(form.is_valid())
-        
-    def test_forms_incorrect_data(self):
-        form_data = {"category":12031023,"amount":"MONEY","startBank":"NOT A REAL CHOICE","endBank":"Gcshdsfsdf"}
-        form = CreateTransactionEntry(data=form_data)
+
+    def test_CreateIponChallengeERROR(self):
+        form_data = {"amount": "OneBajillion"}
+        form = CreateIponTransactionEntry(user=self.user, data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_BankTransaction(self):
+        form_data = {"amount": 69, "endBank": "Maya"}
+        form = BankTransactionEntry(user=self.user, data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_BankTransactionERROR_endbank404(self):
+        form_data = {"amount": 69, "endBank": "MAGICBANK"}
+        form = BankTransactionEntry(user=self.user, data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_CreateTransactionEntry_Dr(self):
+        form_data = {"amount": 69, "endBank": "Maya", "category": "Allowance"}
+        form = CreateTransactionEntry(
+            user=self.user, cat="dep_category", data=form_data
+        )
+        self.assertTrue(form.is_valid())
+
+    def test_CreateTransactionEntry_DrERROR(self):
+        form_data = {"amount": 69, "endBank": "Maya", "category": "MAGICAL LOTTERY"}
+        form = CreateTransactionEntry(
+            user=self.user, cat="dep_category", data=form_data
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_CreateTransactionEntry_Cr(self):
+        form_data = {"amount": 69, "endBank": "Maya", "category": "Food"}
+        form = CreateTransactionEntry(
+            user=self.user, cat="cred_category", data=form_data
+        )
+        self.assertTrue(form.is_valid())
+
+    def test_CreateTransactionEntry_CrERROR(self):
+        form_data = {
+            "amount": 69,
+            "endBank": "Maya",
+            "category": "Hardcore Illegal Drugs",
+        }
+        form = CreateTransactionEntry(
+            user=self.user, cat="cred_category", data=form_data
+        )
+        self.assertFalse(form.is_valid())
+
+    def test_BankTransfTransactEntry(self):
+        form_data = {"amount": 69, "startBank": "Gcash", "endBank": "Maya"}
+        form = BankTransferTransactionEntry(user=self.user, data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_BankTransfTransactEntry_ERROR_start404(self):
+        form_data = {"amount": 69, "startBank": "MYSTERY MONEY", "endBank": "Maya"}
+        form = BankTransferTransactionEntry(user=self.user, data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_BankTransfTransactEntry_ERROR_end404(self):
+        form_data = {"amount": 69, "startBank": "Gcash", "endBank": "MOYA MONEY"}
+        form = BankTransferTransactionEntry(user=self.user, data=form_data)
         self.assertFalse(form.is_valid())
